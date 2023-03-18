@@ -65,6 +65,10 @@ namespace SICP
                     yield return rest[..(index + 1)];
                     rest = rest[(index + 1)..];
                 } 
+                else if (rest[0] == ' ')
+                {
+                    rest = rest[1..];
+                }
                 else
                 {
                     var index = rest.IndexOf(' ');

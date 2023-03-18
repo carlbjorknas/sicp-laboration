@@ -54,5 +54,21 @@ namespace SICP_Tests
             var result = sut.Eval("(+ (+ 1 2))");
             result.Should().Be("3");
         }
+
+        [TestMethod]
+        public void Addition_with_many_levels_of_expression_nesting()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(+ (+ (+ (+ (+ 1 2)))))");
+            result.Should().Be("3");
+        }
+
+        [TestMethod]
+        public void Addition_with_operands_where_some_are_numbers_and_some_are_expressions()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(+ 1 (+ 2 3) (- 4 1) 2)");
+            result.Should().Be((1 + 5 + 3 + 2).ToString());
+        }
     }
 }
