@@ -46,5 +46,13 @@ namespace SICP_Tests
             var result = sut.Eval("(- 10 3 4)");
             result.Should().Be("3");
         }
+
+        [TestMethod]
+        public void Addition_where_the_only_operand_is_an_addition_expression()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(+ (+ 1 2))");
+            result.Should().Be("3");
+        }
     }
 }
