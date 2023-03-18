@@ -25,7 +25,7 @@ namespace SICP
                 else if (op == '-')
                 {
                     if (!operands.Any())
-                        throw new Exception($"Operands are missing in '{code}'");
+                        return 0.ToString();
 
                     if (operands.Count == 1)
                         return (-int.Parse(operands[0])).ToString();
@@ -56,6 +56,9 @@ namespace SICP
         /// <returns></returns>
         private IEnumerable<string> GetOperands(string undressedCode)
         {
+            if (undressedCode.Length == 1)
+                yield break;
+
             var rest = undressedCode.Substring(2);
             while (rest.Any())
             {

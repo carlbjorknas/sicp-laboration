@@ -16,11 +16,43 @@ namespace SICP_Tests
         }
 
         [TestMethod]
+        public void Addition_without_arguments_returns_0()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(+)");
+            result.Should().Be("0");
+        }
+
+        [TestMethod]
         public void When_given_an_addition_with_two_numbers_their_sum_is_returned()
         {
             var sut = new Engine();
             var result = sut.Eval("(+ 1 2)");
             result.Should().Be("3");
+        }
+
+        [TestMethod]
+        public void Addition_where_the_only_operand_is_an_addition_expression()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(+ (+ 1 2))");
+            result.Should().Be("3");
+        }
+
+        [TestMethod]
+        public void Addition_with_many_levels_of_expression_nesting()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(+ (+ (+ (+ (+ 1 2)))))");
+            result.Should().Be("3");
+        }
+
+        [TestMethod]
+        public void Subtraction_without_arguments_returns_0()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(-)");
+            result.Should().Be("0");
         }
 
         [TestMethod]
@@ -48,23 +80,7 @@ namespace SICP_Tests
         }
 
         [TestMethod]
-        public void Addition_where_the_only_operand_is_an_addition_expression()
-        {
-            var sut = new Engine();
-            var result = sut.Eval("(+ (+ 1 2))");
-            result.Should().Be("3");
-        }
-
-        [TestMethod]
-        public void Addition_with_many_levels_of_expression_nesting()
-        {
-            var sut = new Engine();
-            var result = sut.Eval("(+ (+ (+ (+ (+ 1 2)))))");
-            result.Should().Be("3");
-        }
-
-        [TestMethod]
-        public void Addition_with_operands_where_some_are_numbers_and_some_are_expressions()
+        public void Math_operation_with_operands_where_some_are_numbers_and_some_are_expressions()
         {
             var sut = new Engine();
             var result = sut.Eval("(+ 1 (+ 2 3) (- 4 1) 2)");
