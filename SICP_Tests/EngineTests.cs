@@ -22,5 +22,29 @@ namespace SICP_Tests
             var result = sut.Eval("(+ 1 2)");
             result.Should().Be("3");
         }
+
+        [TestMethod]
+        public void When_given_a_subtraction_with_two_numbers_their_diff_is_returned()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(- 2 1)");
+            result.Should().Be("1");
+        }
+
+        [TestMethod]
+        public void When_given_a_unary_subtraction_of_a_positive_number_it_is_returned_with_a_minus()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(- 2)");
+            result.Should().Be("-2");
+        }
+
+        [TestMethod]
+        public void When_given_a_subtraction_with_three_numbers_the_first_is_reduced_by_the_two_others()
+        {
+            var sut = new Engine();
+            var result = sut.Eval("(- 10 3 4)");
+            result.Should().Be("3");
+        }
     }
 }
