@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Reflection.Metadata;
+using System.Text.RegularExpressions;
 
 namespace SICP;
 
@@ -53,22 +54,24 @@ public class Engine
         return expression.StartsWith('(') && expression.EndsWith(')');
     }
 
-    private string GetOperator(string expression)
+    private static string GetOperator(string expression)
     {
-        var match = Regex.Match(expression, @"^\(([a-zA-Z]+|\+|-)( |\))");
-        if (match.Success)
-            return match.Groups[1].Value;
-
-        throw new Exception($"Could not find an operator in '{expression}'.");
+        var op = expression
+            .Skip(1) // the "("
+            .TakeWhile(x => x is not (' ' or ')'))
+            .ToArray();
+        return new string(op);
     }
 
     private IEnumerable<string> GetOperands(string expression)
     {
-        var match = Regex.Match(expression, @"^\(([a-zA-Z]+|\+|-) (.+)\)$");
-        if (!match.Success)
-            yield break;
+        var operandsCharArr = expression
+            .Skip(1) // the "("
+            .Skip(GetOperator(expression).Length)
+            .SkipLast(1) // the ")"
+            .ToArray();
 
-        var operandsStr = match.Groups[2].Value;
+        var operandsStr = new string(operandsCharArr);
         while (operandsStr.Any())
         {
             if (operandsStr[0] == '(')
