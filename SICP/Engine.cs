@@ -2,14 +2,14 @@
 
 public class Engine
 {
-    public string Eval(string code)
+    public string Eval(string expression)
     {
-        if (code.StartsWith("("))
-        {
-            if (!code.EndsWith(")"))
-                throw new Exception($"Expression did not end with a closing parenthesis. '{code}'");
+        if (IsSelfEvaluating(expression))
+            return expression;
 
-            var undressedEpxr = code.Substring(1, code.Length - 2);
+        if (IsApplication(expression))
+        {
+            var undressedEpxr = expression.Substring(1, expression.Length - 2);
             var op = GetOperator(undressedEpxr);
             var operands = GetOperands(undressedEpxr).ToList();
             operands = operands.Select(Eval).ToList();
@@ -24,12 +24,24 @@ public class Engine
                 if (operands.Count == 1)
                     return (-int.Parse(operands[0])).ToString();
 
-                var sum = operands.Skip(1).Select(int.Parse).Sum();                    
+                var sum = operands.Skip(1).Select(int.Parse).Sum();
                 return (int.Parse(operands[0]) - sum).ToString();
             }
-        }
 
-        return code;
+        }
+        
+        throw new Exception($"Unknown expression type.'{expression}'");
+    }
+
+    private bool IsSelfEvaluating(string expression)
+    {
+        // TODO: Handle strings and decimals.
+        return int.TryParse(expression, out var result);
+    }
+
+    private bool IsApplication(string expression)
+    {
+        return expression.StartsWith('(') && expression.EndsWith(')');
     }
 
     private char GetOperator(string code)
