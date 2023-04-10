@@ -1,13 +1,14 @@
-﻿using System.Text.RegularExpressions;
+﻿using SICP.EvalResults;
+using System.Text.RegularExpressions;
 
 namespace SICP;
 
 public class Engine
 {
-    public string Eval(string expression, Environment env)
+    public EvalResult Eval(string expression, Environment env)
     {
-        if (IsSelfEvaluating(expression))
-            return expression;
+        if (IsSelfEvaluating(expression, out var evalResult))
+            return evalResult!;
 
         if (IsVariable(expression))
             return env.GetValue(expression);
@@ -25,30 +26,38 @@ public class Engine
         throw new Exception($"Unknown expression type.'{expression}'");
     }
 
-    private string Apply(string op, List<string> operands, Environment env)
+    private EvalResult Apply(string op, List<string> operands, Environment env)
     {
-        operands = operands.Select(operand => Eval(operand, env)).ToList();
+        var evaluatedOperands = operands.Select(operand => Eval(operand, env)).ToList();
 
         if (op == "+")
-            return operands.Select(x => int.Parse(x)).Sum().ToString();
+            return new IntEvalResult(evaluatedOperands.Cast<IntEvalResult>().Sum(x => x.Value));
         else if (op == "-")
         {
             if (!operands.Any())
-                return 0.ToString();
+                return new IntEvalResult(0);
 
             if (operands.Count == 1)
-                return (-int.Parse(operands[0])).ToString();
+                return new IntEvalResult(-((IntEvalResult)evaluatedOperands[0]).Value);
 
-            var sum = operands.Skip(1).Select(int.Parse).Sum();
-            return (int.Parse(operands[0]) - sum).ToString();
+            var sum = evaluatedOperands.Skip(1).Cast<IntEvalResult>().Sum(x => x.Value);
+            return new IntEvalResult(((IntEvalResult)evaluatedOperands[0]).Value - sum);
         }
         throw new Exception($"Uknown operator '{op}'");
     }
 
-    private bool IsSelfEvaluating(string expression)
+    private bool IsSelfEvaluating(string expression, out EvalResult? evalResult)
     {
+        evalResult = null;
+
         // TODO: Handle strings and decimals.
-        return int.TryParse(expression, out var result);
+        if (int.TryParse(expression, out var result))
+        {
+            evalResult = new IntEvalResult(result);
+            return true;
+        }
+
+        return false;
     }
 
     private bool IsVariable(string expression)
@@ -133,7 +142,7 @@ public class Engine
         }
     }
 
-    private string HandleDefinition(string expression, Environment env)
+    private EvalResult HandleDefinition(string expression, Environment env)
     {
         var operands = GetOperands(expression).ToList();
 
@@ -141,9 +150,10 @@ public class Engine
             throw new Exception($"Invalid number of operands for 'define' in '{expression}'");
 
         var variableName = operands.First();
-        var variableValue = operands.Last();
+        // TODO Fix temporary hack. Call Eval instead of this.
+        var variableValue = new IntEvalResult(int.Parse(operands.Last()));
         env.AddVariable(variableName, variableValue);
 
-        return "ok";
+        return new SymbolEvalResult("ok");
     }
 }
