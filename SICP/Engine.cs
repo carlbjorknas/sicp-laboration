@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace SICP;
 
@@ -20,25 +19,30 @@ public class Engine
         {            
             var op = GetOperator(expression);
             var operands = GetOperands(expression).ToList();
-            operands = operands.Select(operand => Eval(operand, env)).ToList();
-
-            if (op == "+")
-                return operands.Select(x => int.Parse(x)).Sum().ToString();
-            else if (op == "-")
-            {
-                if (!operands.Any())
-                    return 0.ToString();
-
-                if (operands.Count == 1)
-                    return (-int.Parse(operands[0])).ToString();
-
-                var sum = operands.Skip(1).Select(int.Parse).Sum();
-                return (int.Parse(operands[0]) - sum).ToString();
-            }
-
+            return Apply(op, operands, env);
         }
         
         throw new Exception($"Unknown expression type.'{expression}'");
+    }
+
+    private string Apply(string op, List<string> operands, Environment env)
+    {
+        operands = operands.Select(operand => Eval(operand, env)).ToList();
+
+        if (op == "+")
+            return operands.Select(x => int.Parse(x)).Sum().ToString();
+        else if (op == "-")
+        {
+            if (!operands.Any())
+                return 0.ToString();
+
+            if (operands.Count == 1)
+                return (-int.Parse(operands[0])).ToString();
+
+            var sum = operands.Skip(1).Select(int.Parse).Sum();
+            return (int.Parse(operands[0]) - sum).ToString();
+        }
+        throw new Exception($"Uknown operator '{op}'");
     }
 
     private bool IsSelfEvaluating(string expression)
