@@ -18,7 +18,7 @@ public class Engine
 
         if (IsApplication(expression))
         {            
-            var op = GetOperator(expression);
+            var op = Eval(GetOperator(expression), env);
             var operands = GetOperands(expression).ToList();
             return Apply(op, operands, env);
         }
@@ -26,24 +26,14 @@ public class Engine
         throw new Exception($"Unknown expression type.'{expression}'");
     }
 
-    private EvalResult Apply(string op, List<string> operands, Environment env)
+    private EvalResult Apply(EvalResult op, List<string> operands, Environment env)
     {
-        var evaluatedOperands = operands.Select(operand => Eval(operand, env)).ToList();
-
-        if (op == "+")
-            return new IntEvalResult(evaluatedOperands.Cast<IntEvalResult>().Sum(x => x.Value));
-        else if (op == "-")
+        if (op is PrimitiveProcedureEvalResult procedureOp)
         {
-            if (!operands.Any())
-                return new IntEvalResult(0);
-
-            if (operands.Count == 1)
-                return new IntEvalResult(-((IntEvalResult)evaluatedOperands[0]).Value);
-
-            var sum = evaluatedOperands.Skip(1).Cast<IntEvalResult>().Sum(x => x.Value);
-            return new IntEvalResult(((IntEvalResult)evaluatedOperands[0]).Value - sum);
+            return procedureOp.Apply(this, operands, env);
         }
-        throw new Exception($"Uknown operator '{op}'");
+
+        throw new Exception($"'{op}' is not a procedure.");
     }
 
     private bool IsSelfEvaluating(string expression, out EvalResult? evalResult)
@@ -62,7 +52,7 @@ public class Engine
 
     private bool IsVariable(string expression)
     {
-        return Regex.IsMatch(expression, "^[a-z0-9-!]+$", RegexOptions.IgnoreCase);
+        return Regex.IsMatch(expression, "^[a-z0-9\\+\\-!]+$", RegexOptions.IgnoreCase);
     }
 
     private bool IsDefinition(string expression)
