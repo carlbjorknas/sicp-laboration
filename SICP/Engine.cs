@@ -10,6 +10,9 @@ public class Engine
         if (IsSelfEvaluating(expression))
             return expression;
 
+        if (IsVariable(expression))
+            return env.GetValue(expression);
+
         if (IsDefinition(expression))
             return HandleDefinition(expression, env);
 
@@ -42,6 +45,11 @@ public class Engine
     {
         // TODO: Handle strings and decimals.
         return int.TryParse(expression, out var result);
+    }
+
+    private bool IsVariable(string expression)
+    {
+        return Regex.IsMatch(expression, "^[a-z0-9-!]+$", RegexOptions.IgnoreCase);
     }
 
     private bool IsDefinition(string expression)

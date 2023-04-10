@@ -9,7 +9,7 @@ var environment = new SICP.Environment();
 var code = Console.ReadLine();
 
 // TODO Change to ctrl-c?
-while(code != "q")
+while(code is not ("q" or null))
 {
     try
     {        

@@ -1,4 +1,6 @@
-﻿namespace SICP;
+﻿using SICP.Exceptions;
+
+namespace SICP;
 
 public class Environment
 {
@@ -11,6 +13,9 @@ public class Environment
 
     public string GetValue(string name)
     {
-        return _varToValueMap[name];
+        if (_varToValueMap.TryGetValue(name, out var value))
+            return value;
+
+        throw new UnboundVariableException(name);
     }
 }
