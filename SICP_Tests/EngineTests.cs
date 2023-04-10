@@ -102,7 +102,7 @@ public class EngineTests
     }
 
     [TestMethod]
-    public void Can_define_a_variable_with_an_expression()
+    public void Can_define_a_variable_and_bind_it_to_an_expression()
     {
         var result = _sut!.Eval("(define x (+ 1 1))", _env!);
 

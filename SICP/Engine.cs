@@ -150,8 +150,7 @@ public class Engine
             throw new Exception($"Invalid number of operands for 'define' in '{expression}'");
 
         var variableName = operands.First();
-        // TODO Fix temporary hack. Call Eval instead of this.
-        var variableValue = new IntEvalResult(int.Parse(operands.Last()));
+        var variableValue = Eval(operands.Last(), env);
         env.AddVariable(variableName, variableValue);
 
         return new SymbolEvalResult("ok");
