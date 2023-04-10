@@ -6,12 +6,12 @@ namespace SICP;
 
 public class Environment
 {
-    private Dictionary<string, EvalResult> _varToValueMap = new();
+    private readonly Dictionary<string, EvalResult> _varToValueMap = new();
 
     public Environment()
     {
-        _varToValueMap.Add("+", new Plus());
-        _varToValueMap.Add("-", new Minus());
+        AddVariable("+", new Plus());
+        AddVariable("-", new Minus());
     }
 
     public void AddVariable(string name, EvalResult value)
