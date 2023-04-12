@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace SICP;
 
-public class Engine
+public class Evaluator
 {
     public EvalResult Eval(string expression, Environment env)
     {

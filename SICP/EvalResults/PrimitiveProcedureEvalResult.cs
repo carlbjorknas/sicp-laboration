@@ -3,5 +3,5 @@
 internal abstract class PrimitiveProcedureEvalResult : EvalResult
 {
     public override bool IsPrimitiveProcedure => true;
-    public abstract EvalResult Apply(Engine engine, List<string> operands, Environment env);
+    public abstract EvalResult Apply(Evaluator engine, List<string> operands, Environment env);
 }

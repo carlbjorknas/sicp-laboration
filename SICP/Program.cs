@@ -4,7 +4,7 @@ using SICP;
 Console.WriteLine("Start coding!");
 Console.WriteLine("Quit by entering 'q'.");
 
-var engine = new Engine();
+var evaluator = new Evaluator();
 var environment = new SICP.Environment();
 var code = Console.ReadLine();
 
@@ -13,7 +13,7 @@ while(code is not ("q" or null))
 {
     try
     {        
-        var result = engine.Eval(code, environment);
+        var result = evaluator.Eval(code, environment);
         Console.WriteLine(result);
     }
     catch (Exception ex)

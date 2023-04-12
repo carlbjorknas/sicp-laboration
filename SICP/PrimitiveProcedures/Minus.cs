@@ -4,7 +4,7 @@ namespace SICP.PrimitiveProcedures;
 
 internal class Minus : PrimitiveProcedureEvalResult
 {
-    public override EvalResult Apply(Engine engine, List<string> operands, Environment env)
+    public override EvalResult Apply(Evaluator engine, List<string> operands, Environment env)
     {
         var evaluatedOperands = operands.Select(operand => engine.Eval(operand, env)).ToList();
 

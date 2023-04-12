@@ -6,15 +6,15 @@ using SICP.Exceptions;
 namespace SICP_Tests;
 
 [TestClass]
-public class EngineTests
+public class EvaluatorTests
 {
-    private Engine? _sut;
+    private Evaluator? _sut;
     private Environment? _env;
 
     [TestInitialize]
     public void Init()
     {
-        _sut = new Engine();
+        _sut = new Evaluator();
         _env = new Environment();
     }
 
