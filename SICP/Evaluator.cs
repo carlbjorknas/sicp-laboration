@@ -5,6 +5,16 @@ namespace SICP;
 
 public class Evaluator
 {
+    public Expression Eval(Expression expression, Environment env)
+    {
+        if (expression is BooleanExpression)
+        {
+            return expression;
+        }
+
+        throw new Exception();
+    }
+
     public EvalResult Eval(string expression, Environment env)
     {
         if (IsSelfEvaluating(expression, out var evalResult))

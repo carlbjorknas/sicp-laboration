@@ -19,6 +19,14 @@ public class EvaluatorTests
     }
 
     [TestMethod]
+    public void When_expression_is_a_boolean_it_is_returned_as_is()
+    {
+        var expression = new BooleanExpression(false);
+        var result = _sut!.Eval(expression, _env!);
+        result.Should().BeSameAs(expression);
+    }
+
+    [TestMethod]
     public void When_given_a_number_the_number_is_returned()
     {        
         var result = _sut!.Eval("6", _env!);

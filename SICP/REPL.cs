@@ -19,9 +19,15 @@ public class REPL
 
     public void Run()
     {
+        var env = new Environment();
         var command = _reader.Read();
         while(command != string.Empty)
-        {
+        {            
+            var tokens = _lexer.Tokenize(command);
+            var expression = _parser.Parse(tokens);
+            var evaluatedExpression = _evaluator.Eval(expression, env);
+            _printer.Print(evaluatedExpression.ToString());
+
             command = _reader.Read();
         }
     }
