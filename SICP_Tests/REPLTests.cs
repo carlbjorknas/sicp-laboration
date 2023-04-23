@@ -43,4 +43,16 @@ public class REPLTests
 
         _printerMock.Verify(x => x.Print("true"), Times.Once);
     }
+
+    [TestMethod]
+    public void When_false_is_entered_false_is_printed()
+    {
+        _readerMock.SetupSequence(x => x.Read())
+            .Returns("false")
+            .Returns("");
+
+        _sut.Run();
+
+        _printerMock.Verify(x => x.Print("false"), Times.Once);
+    }
 }

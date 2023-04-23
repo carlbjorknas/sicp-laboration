@@ -6,6 +6,8 @@ public class Lexer
     {
         if (text == "true")
             return new[] { new BoolToken(true) };
+        else if (text == "false")
+            return new[] { new BoolToken(false) };
 
         throw new Exception("");
     }
