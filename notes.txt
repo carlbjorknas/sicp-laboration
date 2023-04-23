@@ -1,0 +1,5 @@
+Should probably break out a lexer and a parser from the evaluator
+https://amirkamil.github.io/project-scheme-parser/
+https://amirkamil.github.io/project-scheme-parser/#token-representation
+
+https://conservatory.scheme.org/schemers/Documents/Standards/R5RS/HTML/r5rs-Z-H-10.html#%_sec_7.1

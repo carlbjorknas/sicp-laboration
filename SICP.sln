@@ -5,7 +5,12 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SICP", "SICP\SICP.csproj", "{CF9273A6-C43D-4DBC-B503-85B6EB47A024}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SICP_Tests", "SICP_Tests\SICP_Tests.csproj", "{98F1A1C7-DF66-4093-8BD4-2485458F4582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SICP_Tests", "SICP_Tests\SICP_Tests.csproj", "{98F1A1C7-DF66-4093-8BD4-2485458F4582}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20EAD476-B9F8-4542-B0EA-9B1933FBDBD0}"
+	ProjectSection(SolutionItems) = preProject
+		notes.txt = notes.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
