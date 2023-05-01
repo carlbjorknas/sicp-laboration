@@ -115,4 +115,28 @@ public class REPLTests
 
         _printerMock!.Verify(x => x.Print("10"), Times.Once);
     }
+
+    [TestMethod]
+    public void Can_add_when_operand_is_nested_four_levels()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(+ (+ (+ (+ (+ 1 2)))))")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("3"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Subtraction_without_arguments_returns_0()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(-)")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("0"), Times.Once);
+    }
 }

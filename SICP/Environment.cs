@@ -9,7 +9,7 @@ public class Environment
     public Environment()
     {
         AddVariable("+", PrimitiveProcedurePlus.Instance);
-        //AddVariable("-", new Minus());
+        AddVariable("-", PrimitiveProcedureMinus.Instance);
     }
 
     public void AddVariable(string name, Expression value)

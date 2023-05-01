@@ -52,20 +52,6 @@ public class EvaluatorTests
     }
 
     //[TestMethod]
-    //public void Addition_with_many_levels_of_expression_nesting()
-    //{        
-    //    var result = _sut!.Eval("(+ (+ (+ (+ (+ 1 2)))))", _env!);
-    //    result.ToString().Should().Be("3");
-    //}
-
-    //[TestMethod]
-    //public void Subtraction_without_arguments_returns_0()
-    //{        
-    //    var result = _sut!.Eval("(-)", _env!);
-    //    result.ToString().Should().Be("0");
-    //}
-
-    //[TestMethod]
     //public void When_given_a_subtraction_with_two_numbers_their_diff_is_returned()
     //{        
     //    var result = _sut!.Eval("(- 2 1)", _env!);

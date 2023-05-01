@@ -72,3 +72,20 @@ public class PrimitiveProcedurePlus : PrimitiveProcedure
         return new NumberExpression(sum);
     }
 }
+
+public class PrimitiveProcedureMinus : PrimitiveProcedure
+{
+    public static PrimitiveProcedureMinus Instance { get; } = new PrimitiveProcedureMinus();
+
+    public override Expression Apply(List<Expression> operands, Environment env)
+    {
+        //if (!operands.Any())
+            return new NumberExpression(0);
+
+        //if (operands.Count == 1)
+        //    return new IntEvalResult(-((IntEvalResult)evaluatedOperands[0]).Value);
+
+        //var sum = evaluatedOperands.Skip(1).Cast<IntEvalResult>().Sum(x => x.Value);
+        //return new IntEvalResult(((IntEvalResult)evaluatedOperands[0]).Value - sum);
+    }
+}

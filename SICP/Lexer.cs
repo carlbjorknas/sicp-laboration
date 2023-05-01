@@ -26,7 +26,7 @@ public class Lexer
             {
                 tokens.Add(GetNumberToken(ref text));
             }
-            else if (text.StartsWith("+"))
+            else if (text.StartsWith("+") || text.StartsWith("-"))
             {
                 tokens.Add(new IdentifierToken(text[..1]));
                 text = text[1..];
