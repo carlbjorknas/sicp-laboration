@@ -3,6 +3,12 @@
     public abstract class Token
     {
         public abstract override string ToString();
+
+        public bool IsStartingParen 
+            => this is PunctuatorToken pt && pt.Value == "(";
+
+        public bool IsEndingParen
+            => this is PunctuatorToken pt && pt.Value == ")";
     }
 
     public class BoolToken : Token

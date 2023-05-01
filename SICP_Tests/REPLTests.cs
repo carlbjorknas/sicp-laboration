@@ -91,4 +91,16 @@ public class REPLTests
 
         _printerMock!.Verify(x => x.Print("0"), Times.Once);
     }
+
+    [TestMethod]
+    public void Can_add_two_numbers()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(+ 2 3)")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("5"), Times.Once);
+    }
 }

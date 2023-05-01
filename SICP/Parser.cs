@@ -6,13 +6,9 @@ public class Parser
     {
         if (tokens.Any())
         {
-            // Temporary cheat to get the test to pass. Will fix when have more time.
-            if (tokens.Length == 3 &&
-                tokens[0] is PunctuatorToken pt1 && pt1.Value == "(" &&
-                tokens[1] is IdentifierToken idt && idt.Value == "+" &&
-                tokens[2] is PunctuatorToken pt2 && pt2.Value == ")") 
+            if (tokens[0].IsStartingParen)
             {
-                return new ProcedureCallExpression(new VariableExpression("+"), new List<Expression>());
+                return ParseProcedureCall(tokens);
             }
             if (tokens.First() is BoolToken bt)
             {
@@ -29,5 +25,26 @@ public class Parser
         }
 
         throw new Exception($"Could not parse the token array [{string.Join(", ", tokens.Select(x => x.ToString()))}]");
+    }
+
+    private ProcedureCallExpression ParseProcedureCall(Token[] tokens)
+    {
+        if (tokens[1].IsEndingParen)
+            throw new Exception("A procedure call requires an operator.");
+
+        var op = Parse(new[] { tokens[1] });
+
+        var operands = tokens
+            .Skip(2)
+            .TakeWhile(x => !x.IsEndingParen)
+            .Select(x => Parse(new[] { x }))
+            .ToList();
+
+        if (!tokens[2 + operands.Count].IsEndingParen)
+            throw new Exception("A procedure call must end with a parenthesis.");
+
+        tokens = tokens.Skip(2 + operands.Count + 1).ToArray();
+
+        return new ProcedureCallExpression(new VariableExpression("+"), operands);
     }
 }

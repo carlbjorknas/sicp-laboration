@@ -50,4 +50,22 @@ public class LexerTests
         ((IdentifierToken)result[1]).Value.Should().Be("+");
         ((PunctuatorToken)result[2]).Value.Should().Be(")");
     }
+
+    [TestMethod]
+    public void Lexing_an_addition_of_two_numbers()
+    {
+        var sut = new Lexer();
+        var result = sut.Tokenize("(+ 2 3)");
+        result.Should().HaveCount(5);
+        result[0].Should().BeOfType<PunctuatorToken>();
+        result[1].Should().BeOfType<IdentifierToken>();
+        result[2].Should().BeOfType<NumberToken>();
+        result[3].Should().BeOfType<NumberToken>();
+        result[4].Should().BeOfType<PunctuatorToken>();
+        ((PunctuatorToken)result[0]).Value.Should().Be("(");
+        ((IdentifierToken)result[1]).Value.Should().Be("+");
+        ((NumberToken)result[2]).Value.Should().Be(2);
+        ((NumberToken)result[3]).Value.Should().Be(3);
+        ((PunctuatorToken)result[4]).Value.Should().Be(")");
+    }
 }

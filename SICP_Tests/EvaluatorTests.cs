@@ -52,13 +52,6 @@ public class EvaluatorTests
     }
 
     //[TestMethod]
-    //public void When_given_an_addition_with_two_numbers_their_sum_is_returned()
-    //{        
-    //    var result = _sut!.Eval("(+ 1 2)", _env!);
-    //    result.ToString().Should().Be("3");
-    //}
-
-    //[TestMethod]
     //public void Addition_where_the_only_operand_is_an_addition_expression()
     //{        
     //    var result = _sut!.Eval("(+ (+ 1 2))", _env!);
