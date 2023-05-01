@@ -17,4 +17,15 @@ public class ParserTests
             .And.BeOfType<BooleanExpression>();
         ((BooleanExpression)result).Value.Should().BeTrue();        
     }
+
+    [TestMethod]
+    public void When_parsing_a_number_token_a_number_an_expression_having_the_correct_value_is_returned()
+    {
+        var sut = new Parser();
+        var result = sut.Parse(new[] { new NumberToken(123) });
+
+        result.Should().NotBeNull()
+            .And.BeOfType<NumberExpression>();
+        ((NumberExpression)result).Value.Should().Be(123);
+    }
 }

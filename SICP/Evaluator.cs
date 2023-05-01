@@ -1,4 +1,5 @@
 ﻿using SICP.EvalResults;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace SICP;
@@ -7,13 +8,16 @@ public class Evaluator
 {
     public Expression Eval(Expression expression, Environment env)
     {
-        if (expression is BooleanExpression)
+        if (IsSelfEvaluating(expression))
         {
             return expression;
         }
 
-        throw new Exception();
+        throw new Exception($"Can not evaluate the expression '{expression}'");
     }
+
+    private bool IsSelfEvaluating(Expression expr)
+        => expr is BooleanExpression or NumberExpression;
 
     public EvalResult Eval(string expression, Environment env)
     {
@@ -44,7 +48,7 @@ public class Evaluator
         }
 
         throw new Exception($"'{op}' is not a procedure.");
-    }
+    }    
 
     private bool IsSelfEvaluating(string expression, out EvalResult? evalResult)
     {

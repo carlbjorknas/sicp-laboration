@@ -7,9 +7,9 @@ namespace SICP_Tests;
 [TestClass]
 public class REPLTests
 {
-    private Mock<IReader> _readerMock;
-    private Mock<IPrinter> _printerMock;
-    private REPL _sut;
+    private Mock<IReader>? _readerMock;
+    private Mock<IPrinter>? _printerMock;
+    private REPL? _sut;
 
     [TestInitialize]
     public void Init()
@@ -25,9 +25,9 @@ public class REPLTests
     [TestMethod]
     public void When_empty_string_is_entered_the_repl_ends()
     {
-        _readerMock.Setup(x => x.Read()).Returns("");
+        _readerMock!.Setup(x => x.Read()).Returns("");
 
-        _sut.Run();
+        _sut!.Run();
 
         _readerMock.Verify(x => x.Read(), Times.Once);
     }
@@ -35,24 +35,36 @@ public class REPLTests
     [TestMethod]
     public void When_true_is_entered_true_is_printed()
     {        
-        _readerMock.SetupSequence(x => x.Read())
+        _readerMock!.SetupSequence(x => x.Read())
             .Returns("true")
             .Returns("");
 
-        _sut.Run();
+        _sut!.Run();
 
-        _printerMock.Verify(x => x.Print("true"), Times.Once);
+        _printerMock!.Verify(x => x.Print("true"), Times.Once);
     }
 
     [TestMethod]
     public void When_false_is_entered_false_is_printed()
     {
-        _readerMock.SetupSequence(x => x.Read())
+        _readerMock!.SetupSequence(x => x.Read())
             .Returns("false")
             .Returns("");
 
-        _sut.Run();
+        _sut!.Run();
 
-        _printerMock.Verify(x => x.Print("false"), Times.Once);
+        _printerMock!.Verify(x => x.Print("false"), Times.Once);
+    }
+
+    [TestMethod]
+    public void When_a_integer_is_entered_it_is_printed_back()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("123")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("123"), Times.Once);
     }
 }

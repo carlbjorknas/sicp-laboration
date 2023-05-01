@@ -27,11 +27,11 @@ public class EvaluatorTests
     }
 
     [TestMethod]
-    public void When_given_a_number_the_number_is_returned()
-    {        
-        var result = _sut!.Eval("6", _env!);
-        result.IsNumber.Should().BeTrue();
-        result.ToString().Should().Be("6");
+    public void When_expression_is_a_number_it_is_returned_as_is()
+    {
+        var expression = new NumberExpression(123);
+        var result = _sut!.Eval(expression, _env!);
+        result.Should().BeSameAs(expression);
     }
 
     [TestMethod]

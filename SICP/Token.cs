@@ -13,4 +13,14 @@
 
         public bool Value { get; }
     }
+
+    public class NumberToken : Token
+    {
+        public NumberToken(int value)
+        {
+            Value = value;
+        }
+
+        public int Value { get; }
+    }
 }

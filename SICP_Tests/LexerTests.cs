@@ -17,4 +17,15 @@ public class LexerTests
         ((BoolToken)result[0]).Value.Should().BeTrue();
 
     }
+
+    [TestMethod]
+    public void When_lexing_the_string_123_a_number_token_having_the_value_123_is_returned()
+    {
+        var sut = new Lexer();
+        var result = sut.Tokenize("123");
+        result.Should().HaveCount(1);
+        result[0].Should().BeOfType<NumberToken>();
+        ((NumberToken)result[0]).Value.Should().Be(123);
+
+    }
 }

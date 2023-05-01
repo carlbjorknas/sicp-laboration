@@ -15,5 +15,17 @@ public class BooleanExpression : Expression
     public bool Value { get; }
 
     public override string ToString() => Value ? "true" : "false";
+}
+
+public class NumberExpression : Expression
+{
+    public NumberExpression(int value)
+    {
+        Value = value;
+    }
+
+    public int Value { get; }
+
+    public override string ToString() => Value.ToString();
 
 }
