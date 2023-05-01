@@ -103,4 +103,16 @@ public class REPLTests
 
         _printerMock!.Verify(x => x.Print("5"), Times.Once);
     }
+
+    [TestMethod]
+    public void Can_add_two_addition_expressions()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(+ (+ 1 2) (+ 3 4))")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("10"), Times.Once);
+    }
 }

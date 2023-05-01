@@ -52,13 +52,6 @@ public class EvaluatorTests
     }
 
     //[TestMethod]
-    //public void Addition_where_the_only_operand_is_an_addition_expression()
-    //{        
-    //    var result = _sut!.Eval("(+ (+ 1 2))", _env!);
-    //    result.ToString().Should().Be("3");
-    //}
-
-    //[TestMethod]
     //public void Addition_with_many_levels_of_expression_nesting()
     //{        
     //    var result = _sut!.Eval("(+ (+ (+ (+ (+ 1 2)))))", _env!);
