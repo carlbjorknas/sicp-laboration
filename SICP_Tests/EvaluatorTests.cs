@@ -42,13 +42,14 @@ public class EvaluatorTests
         result.Should().BeSameAs(PrimitiveProcedurePlus.Instance);
     }
 
-    //[TestMethod]
-    //public void Addition_without_arguments_returns_0()
-    //{        
-    //    var result = _sut!.Eval("(+)", _env!);
-    //    result.IsNumber.Should().BeTrue();
-    //    result.ToString().Should().Be("0");
-    //}
+    [TestMethod]
+    public void Addition_without_arguments_returns_0()
+    {
+        var expression = new ProcedureCallExpression(new VariableExpression("+"), null);
+        var result = _sut!.Eval(expression, _env!);
+        result.Should().BeOfType<NumberExpression>();
+        ((NumberExpression)result).Value.Should().Be(0);
+    }
 
     //[TestMethod]
     //public void When_given_an_addition_with_two_numbers_their_sum_is_returned()

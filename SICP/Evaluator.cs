@@ -16,12 +16,28 @@ public class Evaluator
         {
             return env.GetValue(ve.Value);
         }
+        else if (expression is ProcedureCallExpression call)
+        {
+            var evaluatedOperator = Eval(call.Operator, env);
+            var evaluatedOperands = call.Operands.Select(x => Eval(x, env)).ToList();
+            return Apply(evaluatedOperator, evaluatedOperands, env);
+        }
 
         throw new Exception($"Can not evaluate the expression '{expression}'");
     }
 
     private bool IsSelfEvaluating(Expression expr)
         => expr is BooleanExpression or NumberExpression;
+
+    private Expression Apply(Expression op, List<Expression> operands, Environment env)
+    {
+        if (op is PrimitiveProcedure primitiveProcedureOp)
+        {
+            return primitiveProcedureOp.Apply(operands, env);
+        }
+
+        throw new Exception($"'{op}' is not a procedure.");
+    }
 
     //public EvalResult Eval(string expression, Environment env)
     //{
@@ -40,7 +56,7 @@ public class Evaluator
     //        var operands = GetOperands(expression).ToList();
     //        return Apply(op, operands, env);
     //    }
-        
+
     //    throw new Exception($"Unknown expression type.'{expression}'");
     //}
 

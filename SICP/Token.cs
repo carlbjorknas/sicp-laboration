@@ -40,4 +40,16 @@
 
         public override string ToString() => $"{GetType()} {Value}";
     }
+
+    public class PunctuatorToken : Token
+    {
+        public PunctuatorToken(string value)
+        {
+            Value = value;
+        }
+
+        public string Value { get; }
+
+        public override string ToString() => $"{GetType()} {Value}";
+    }
 }

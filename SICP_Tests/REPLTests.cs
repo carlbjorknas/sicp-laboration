@@ -79,4 +79,16 @@ public class REPLTests
 
         _printerMock!.Verify(x => x.Print("PrimitiveProcedure"), Times.Once);
     }
+
+    [TestMethod]
+    public void When_calling_plus_without_operators_then_zero_is_printed()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(+)")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("0"), Times.Once);
+    }
 }

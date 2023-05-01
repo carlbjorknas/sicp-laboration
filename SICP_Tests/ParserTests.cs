@@ -39,4 +39,26 @@ public class ParserTests
             .And.BeOfType<VariableExpression>();
         ((VariableExpression)result).Value.Should().Be("+");
     }
+
+    [TestMethod]
+    public void When_parsing_an_addition_without_operands_then_a_procedure_call_expression_having_plus_as_operator_and_no_operands_is_returned()
+    {
+        var sut = new Parser();
+        var tokens = new Token[]
+        {
+            new PunctuatorToken("("),
+            new IdentifierToken("+"),
+            new PunctuatorToken(")")
+        };
+        var result = sut.Parse(tokens);
+
+        result.Should().NotBeNull()
+            .And.BeOfType<ProcedureCallExpression>();
+
+        var call = (ProcedureCallExpression)result;
+        call.Operator.Should().BeOfType<VariableExpression>();
+        ((VariableExpression)call.Operator).Value.Should().Be("+");
+
+        call.Operands.Should().BeEmpty();
+    }
 }

@@ -41,12 +41,34 @@ public class VariableExpression : Expression
     public override string ToString() => Value;
 }
 
+public class ProcedureCallExpression : Expression
+{
+    public ProcedureCallExpression(Expression op, List<Expression>? operands)
+    {
+        Operator = op;
+        Operands = operands ?? new List<Expression>();
+    }
+
+    public Expression Operator { get; }
+    public List<Expression> Operands { get; }
+
+    public override string ToString() => $"Procedure call. Operator: '{Operator}'. {Operands.Count} operands.";
+}
+
 public abstract class PrimitiveProcedure : Expression
 {
+    public abstract Expression Apply(List<Expression> operands, Environment env);
     public override string ToString() => "PrimitiveProcedure";
 }
 
 public class PrimitiveProcedurePlus : PrimitiveProcedure
 {
     public static PrimitiveProcedurePlus Instance { get; } = new PrimitiveProcedurePlus();
+
+    public override Expression Apply(List<Expression> operands, Environment env)
+    {
+        // TODO Handle operands that are not numbers.
+        var sum = operands.Cast<NumberExpression>().Sum(x => x.Value);
+        return new NumberExpression(sum);
+    }
 }

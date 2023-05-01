@@ -36,4 +36,18 @@ public class LexerTests
         result[0].Should().BeOfType<IdentifierToken>();
         ((IdentifierToken)result[0]).Value.Should().Be("+");
     }
+
+    [TestMethod]
+    public void When_lexing_a_call_to_plus_without_operands_then_three_tokens_are_returned()
+    {
+        var sut = new Lexer();
+        var result = sut.Tokenize("(+)");
+        result.Should().HaveCount(3);
+        result[0].Should().BeOfType<PunctuatorToken>();
+        result[1].Should().BeOfType<IdentifierToken>();
+        result[2].Should().BeOfType<PunctuatorToken>();
+        ((PunctuatorToken)result[0]).Value.Should().Be("(");
+        ((IdentifierToken)result[1]).Value.Should().Be("+");
+        ((PunctuatorToken)result[2]).Value.Should().Be(")");
+    }
 }
