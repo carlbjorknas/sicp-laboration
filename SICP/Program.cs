@@ -2,26 +2,19 @@
 using SICP;
 
 Console.WriteLine("Start coding!");
-Console.WriteLine("Quit by entering 'q'.");
+Console.WriteLine("Quit by entering an empty line.");
 
-var evaluator = new Evaluator();
-var environment = new SICP.Environment();
-var code = Console.ReadLine();
+var repl = new REPL(new Reader(), new Printer(), new Lexer(), new Parser(), new Evaluator());
+repl.Run();
 
-// TODO Change to ctrl-c?
-while(code is not ("q" or null))
+class Reader : IReader
 {
-    try
-    {        
-        var result = evaluator.Eval(code, environment);
-        Console.WriteLine(result);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex.Message);
-    } 
-    
-    code = Console.ReadLine();
+    public string Read() => Console.ReadLine();
+}
+
+class Printer : IPrinter
+{
+    public void Print(string text) => Console.WriteLine(text);
 }
 
 

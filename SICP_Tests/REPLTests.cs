@@ -34,7 +34,7 @@ public class REPLTests
 
     [TestMethod]
     public void When_true_is_entered_true_is_printed()
-    {        
+    {
         _readerMock!.SetupSequence(x => x.Read())
             .Returns("true")
             .Returns("");
@@ -66,5 +66,17 @@ public class REPLTests
         _sut!.Run();
 
         _printerMock!.Verify(x => x.Print("123"), Times.Once);
+    }
+
+    [TestMethod]
+    public void When_entering_a_plus_then_the_string_PrimitiveProcedure_is_printed()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("+")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("PrimitiveProcedure"), Times.Once);
     }
 }

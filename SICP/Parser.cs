@@ -14,6 +14,10 @@ public class Parser
             {
                 return new NumberExpression(nt.Value);
             }
+            if (tokens.First() is IdentifierToken it)
+            {
+                return new VariableExpression(it.Value);
+            }
         }
 
         throw new Exception($"Could not parse the token array [{string.Join(", ", tokens.Select(x => x.ToString()))}]");

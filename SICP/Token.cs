@@ -1,7 +1,8 @@
 ﻿namespace SICP
 {
-    public class Token
+    public abstract class Token
     {
+        public abstract override string ToString();
     }
 
     public class BoolToken : Token
@@ -12,6 +13,8 @@
         }
 
         public bool Value { get; }
+
+        public override string ToString() => $"{GetType()} {Value}";
     }
 
     public class NumberToken : Token
@@ -22,5 +25,19 @@
         }
 
         public int Value { get; }
+
+        public override string ToString() => $"{GetType()} {Value}";
+    }
+
+    public class IdentifierToken : Token
+    {
+        public IdentifierToken(string value)
+        {
+            Value = value;
+        }
+
+        public string Value { get; }
+
+        public override string ToString() => $"{GetType()} {Value}";
     }
 }
