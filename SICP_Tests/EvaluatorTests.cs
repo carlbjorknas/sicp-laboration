@@ -62,27 +62,6 @@ public class EvaluatorTests
     }
 
     //[TestMethod]
-    //public void When_given_a_subtraction_with_two_numbers_their_diff_is_returned()
-    //{        
-    //    var result = _sut!.Eval("(- 2 1)", _env!);
-    //    result.ToString().Should().Be("1");
-    //}
-
-    //[TestMethod]
-    //public void When_given_a_subtraction_with_three_numbers_the_first_is_reduced_by_the_two_others()
-    //{        
-    //    var result = _sut!.Eval("(- 10 3 4)", _env!);
-    //    result.ToString().Should().Be("3");
-    //}
-
-    //[TestMethod]
-    //public void Math_operation_with_operands_where_some_are_numbers_and_some_are_expressions()
-    //{        
-    //    var result = _sut!.Eval("(+ 1 (+ 2 3) (- 4 1) 2)", _env!);
-    //    result.ToString().Should().Be((1 + 5 + 3 + 2).ToString());
-    //}
-
-    //[TestMethod]
     //public void Can_define_a_variable_with_a_value()
     //{        
     //    var result = _sut!.Eval("(define x 10)", _env!);

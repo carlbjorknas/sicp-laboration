@@ -151,4 +151,40 @@ public class REPLTests
 
         _printerMock!.Verify(x => x.Print("-2"), Times.Once);
     }
+
+    [TestMethod]
+    public void When_given_a_subtraction_with_two_numbers_their_diff_is_returned()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(- 2 1)")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("1"), Times.Once);
+    }
+
+    [TestMethod]
+    public void When_given_a_subtraction_with_three_numbers_the_first_is_reduced_by_the_two_others()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(- 10 3 4)")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("3"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Math_operation_with_operands_where_some_are_numbers_and_some_are_expressions()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(+ 1 (+ 2 3) (- 4 1) 2)")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print((1 + 2 + 3 + (4 - 1) + 2).ToString()), Times.Once);
+    }
 }

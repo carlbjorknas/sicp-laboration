@@ -86,10 +86,10 @@ public class PrimitiveProcedureMinus : PrimitiveProcedure
 
         var numberOperands = operands.Cast<NumberExpression>().ToList();
 
-        //if (operands.Count == 1)
+        if (operands.Count == 1)
             return new NumberExpression(-numberOperands[0].Value);
 
-        //var sum = evaluatedOperands.Skip(1).Cast<IntEvalResult>().Sum(x => x.Value);
-        //return new IntEvalResult(((IntEvalResult)evaluatedOperands[0]).Value - sum);
+        var sum = numberOperands.Skip(1).Sum(x => x.Value);
+        return new NumberExpression(numberOperands[0].Value - sum);
     }
 }
