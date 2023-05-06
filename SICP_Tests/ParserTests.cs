@@ -114,4 +114,25 @@ public class ParserTests
         call.Operands[0].Should().BeOfType<NumberExpression>()
             .Which.Value.Should().Be(2);
     }
+
+    [TestMethod]
+    public void Can_parse_a_definition_of_a_number()
+    {
+        var sut = new Parser();
+        var tokens = new Token[]
+        {
+            new PunctuatorToken("("),
+            new IdentifierToken("define"),
+            new IdentifierToken("x"),
+            new NumberToken(10),
+            new PunctuatorToken(")")
+        };
+        var result = sut.Parse(tokens);
+
+        result.Should().NotBeNull().And.BeOfType<DefinitionExpression>();
+        var definition = (DefinitionExpression)result;
+        definition.VariableName.Should().Be("x");
+        definition.Value.Should().BeOfType<NumberExpression>()
+            .Which.Value.Should().Be(10);
+    }
 }

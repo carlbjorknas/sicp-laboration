@@ -93,3 +93,18 @@ public class PrimitiveProcedureMinus : PrimitiveProcedure
         return new NumberExpression(numberOperands[0].Value - sum);
     }
 }
+
+public class DefinitionExpression : Expression
+{
+    public DefinitionExpression(string variableName, Expression value)
+    {
+        VariableName = variableName;
+        Value = value;
+    }
+
+    public string VariableName { get; }
+    public Expression Value { get; }
+
+    public override string ToString() 
+        => $"definition {VariableName}={Value}";
+}

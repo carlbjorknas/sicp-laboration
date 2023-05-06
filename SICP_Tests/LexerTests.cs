@@ -84,4 +84,22 @@ public class LexerTests
         ((NumberToken)result[2]).Value.Should().Be(2);
         ((PunctuatorToken)result[3]).Value.Should().Be(")");
     }
+
+    [TestMethod]
+    public void Lexing_a_definition()
+    {
+        var sut = new Lexer();
+        var result = sut.Tokenize("(define x 10)");
+        result.Should().HaveCount(5);
+        result[0].Should().BeOfType<PunctuatorToken>();
+        result[1].Should().BeOfType<IdentifierToken>();
+        result[2].Should().BeOfType<IdentifierToken>();
+        result[3].Should().BeOfType<NumberToken>();
+        result[4].Should().BeOfType<PunctuatorToken>();
+        ((PunctuatorToken)result[0]).Value.Should().Be("(");
+        ((IdentifierToken)result[1]).Value.Should().Be("define");
+        ((IdentifierToken)result[2]).Value.Should().Be("x");
+        ((NumberToken)result[3]).Value.Should().Be(10);
+        ((PunctuatorToken)result[4]).Value.Should().Be(")");
+    }
 }

@@ -31,6 +31,10 @@ public class Lexer
                 tokens.Add(new IdentifierToken(text[..1]));
                 text = text[1..];
             }
+            else if (text.BeginsWithLetter())
+            {
+                tokens.Add(GetIdentifierToken(ref text));
+            }
             else
                 throw new Exception($"Cannot tokenize '{text}'.");
         }
@@ -49,12 +53,22 @@ public class Lexer
 
         throw new Exception($"'{tokenText}' is not a valid number.");
     }
+
+    private IdentifierToken GetIdentifierToken(ref string text)
+    {
+        var tokenText = text.TakeUntilNextPunctuation();
+        text = text[tokenText.Length..];
+        return new IdentifierToken(tokenText);
+    }
 }
 
 internal static class StringExtensions
 {
     public static bool BeginsWithDigit(this string text)
         => Regex.IsMatch(text[..1], "[0-9]");
+
+    public static bool BeginsWithLetter(this string text)
+        => Regex.IsMatch(text[..1], "[a-z]", RegexOptions.IgnoreCase);
 
     public static string TakeUntilNextPunctuation(this string text)
     {

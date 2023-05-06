@@ -12,6 +12,10 @@ public class Evaluator
         {
             return env.GetValue(ve.Value);
         }
+        else if (expression is DefinitionExpression definitionExpression)
+        {
+            return HandleDefinition(definitionExpression, env);
+        }
         else if (expression is ProcedureCallExpression call)
         {
             var evaluatedOperator = Eval(call.Operator, env);
@@ -24,6 +28,13 @@ public class Evaluator
 
     private bool IsSelfEvaluating(Expression expr)
         => expr is BooleanExpression or NumberExpression;
+
+    private Expression HandleDefinition(DefinitionExpression definitionExpression, Environment env)
+    {
+        var variableValue = Eval(definitionExpression.Value, env);
+        env.AddVariable(definitionExpression.VariableName, variableValue);
+        return new VariableExpression("ok");
+    }
 
     private Expression Apply(Expression op, List<Expression> operands, Environment env)
     {
@@ -59,19 +70,5 @@ public class Evaluator
     //private bool IsDefinition(string expression)
     //{
     //    return GetOperator(expression) == "define";
-    //}
-
-    //private EvalResult HandleDefinition(string expression, Environment env)
-    //{
-    //    var operands = GetOperands(expression).ToList();
-
-    //    if (operands.Count != 2)
-    //        throw new Exception($"Invalid number of operands for 'define' in '{expression}'");
-
-    //    var variableName = operands.First();
-    //    var variableValue = Eval(operands.Last(), env);
-    //    env.AddVariable(variableName, variableValue);
-
-    //    return new SymbolEvalResult("ok");
     //}
 }

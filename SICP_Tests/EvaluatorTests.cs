@@ -61,16 +61,18 @@ public class EvaluatorTests
         ((NumberExpression)result).Value.Should().Be(-2);
     }
 
-    //[TestMethod]
-    //public void Can_define_a_variable_with_a_value()
-    //{        
-    //    var result = _sut!.Eval("(define x 10)", _env!);
+    [TestMethod]
+    public void Can_evaluate_a_definition_where_a_variable_binds_to_a_number()
+    {
+        var expression = new DefinitionExpression("x", new NumberExpression(10));
+        var result = _sut!.Eval(expression, _env!);
+        result.Should().BeOfType<VariableExpression>()
+         .Which.Value.Should().Be("ok");
 
-    //    result.ToString().Should().Be("ok");
-    //    var value = _env!.GetValue("x");
-    //    value.IsNumber.Should().BeTrue();
-    //    value.ToString().Should().Be("10");
-    //}
+        var value = _env!.GetValue("x");
+        value.Should().BeOfType<NumberExpression>()
+            .Which.Value.Should().Be(10);
+    }
 
     //[TestMethod]
     //public void Can_define_a_variable_and_bind_it_to_an_expression()

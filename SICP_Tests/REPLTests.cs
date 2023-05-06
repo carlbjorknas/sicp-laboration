@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SICP;
 
@@ -186,5 +187,20 @@ public class REPLTests
         _sut!.Run();
 
         _printerMock!.Verify(x => x.Print((1 + 2 + 3 + (4 - 1) + 2).ToString()), Times.Once);
+    }
+
+    [TestMethod]
+    public void Can_define_a_variable_and_bind_it_to_a_number()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(define x 10)")
+            .Returns("");
+
+        var env = _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("ok"), Times.Once);
+        var value = env.GetValue("x");
+        value.Should().BeOfType<NumberExpression>()
+            .Which.Value.Should().Be(10);
     }
 }

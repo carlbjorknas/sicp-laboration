@@ -17,7 +17,7 @@ public class REPL
         _evaluator = evaluator;
     }
 
-    public void Run()
+    public Environment Run()
     {
         var env = new Environment();
         var command = _reader.Read();
@@ -30,6 +30,8 @@ public class REPL
 
             command = _reader.Read();
         }
+
+        return env;
     }
 }
 
