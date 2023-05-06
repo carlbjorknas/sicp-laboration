@@ -2,6 +2,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SICP;
 using SICP.Exceptions;
+using System.Collections.Generic;
 
 namespace SICP_Tests;
 
@@ -51,18 +52,20 @@ public class EvaluatorTests
         ((NumberExpression)result).Value.Should().Be(0);
     }
 
+    [TestMethod]
+    public void Unary_subtraction()
+    {
+        var expression = new ProcedureCallExpression(new VariableExpression("-"), new List<Expression> { new NumberExpression(2) });
+        var result = _sut!.Eval(expression, _env!);
+        result.Should().BeOfType<NumberExpression>();
+        ((NumberExpression)result).Value.Should().Be(-2);
+    }
+
     //[TestMethod]
     //public void When_given_a_subtraction_with_two_numbers_their_diff_is_returned()
     //{        
     //    var result = _sut!.Eval("(- 2 1)", _env!);
     //    result.ToString().Should().Be("1");
-    //}
-
-    //[TestMethod]
-    //public void When_given_a_unary_subtraction_of_a_positive_number_it_is_returned_with_a_minus()
-    //{        
-    //    var result = _sut!.Eval("(- 2)", _env!);
-    //    result.ToString().Should().Be("-2");
     //}
 
     //[TestMethod]

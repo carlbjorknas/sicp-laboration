@@ -88,6 +88,30 @@ public class ParserTests
             .Which.Value.Should().Be(2);
         call.Operands[1].Should().BeOfType<NumberExpression>()
             .Which.Value.Should().Be(3);
+    }
 
+    [TestMethod]
+    public void Can_parse_an_unary_subtraction()
+    {
+        var sut = new Parser();
+        var tokens = new Token[]
+        {
+            new PunctuatorToken("("),
+            new IdentifierToken("-"),
+            new NumberToken(2),
+            new PunctuatorToken(")")
+        };
+        var result = sut.Parse(tokens);
+
+        result.Should().NotBeNull()
+            .And.BeOfType<ProcedureCallExpression>();
+
+        var call = (ProcedureCallExpression)result;
+        call.Operator.Should().BeOfType<VariableExpression>()
+            .Which.Value.Should().Be("-");
+
+        call.Operands.Should().HaveCount(1);
+        call.Operands[0].Should().BeOfType<NumberExpression>()
+            .Which.Value.Should().Be(2);
     }
 }

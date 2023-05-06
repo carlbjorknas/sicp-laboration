@@ -139,4 +139,16 @@ public class REPLTests
 
         _printerMock!.Verify(x => x.Print("0"), Times.Once);
     }
+
+    [TestMethod]
+    public void When_given_a_unary_subtraction_of_a_positive_number_it_is_returned_with_a_minus()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(- 2)")
+            .Returns("");
+
+        _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("-2"), Times.Once);
+    }
 }

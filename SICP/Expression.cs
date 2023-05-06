@@ -79,11 +79,15 @@ public class PrimitiveProcedureMinus : PrimitiveProcedure
 
     public override Expression Apply(List<Expression> operands, Environment env)
     {
-        //if (!operands.Any())
+        // TODO Handle operands that are not numbers.
+
+        if (!operands.Any())
             return new NumberExpression(0);
 
+        var numberOperands = operands.Cast<NumberExpression>().ToList();
+
         //if (operands.Count == 1)
-        //    return new IntEvalResult(-((IntEvalResult)evaluatedOperands[0]).Value);
+            return new NumberExpression(-numberOperands[0].Value);
 
         //var sum = evaluatedOperands.Skip(1).Cast<IntEvalResult>().Sum(x => x.Value);
         //return new IntEvalResult(((IntEvalResult)evaluatedOperands[0]).Value - sum);

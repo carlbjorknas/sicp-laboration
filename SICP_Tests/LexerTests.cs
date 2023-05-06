@@ -68,4 +68,20 @@ public class LexerTests
         ((NumberToken)result[3]).Value.Should().Be(3);
         ((PunctuatorToken)result[4]).Value.Should().Be(")");
     }
+
+    [TestMethod]
+    public void Lexing_an_unary_subtraction()
+    {
+        var sut = new Lexer();
+        var result = sut.Tokenize("(- 2)");
+        result.Should().HaveCount(4);
+        result[0].Should().BeOfType<PunctuatorToken>();
+        result[1].Should().BeOfType<IdentifierToken>();
+        result[2].Should().BeOfType<NumberToken>();
+        result[3].Should().BeOfType<PunctuatorToken>();
+        ((PunctuatorToken)result[0]).Value.Should().Be("(");
+        ((IdentifierToken)result[1]).Value.Should().Be("-");
+        ((NumberToken)result[2]).Value.Should().Be(2);
+        ((PunctuatorToken)result[3]).Value.Should().Be(")");
+    }
 }
