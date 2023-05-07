@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SICP;
+using SICP.Exceptions;
 
 namespace SICP_Tests;
 
@@ -202,5 +203,47 @@ public class REPLTests
         var value = env.GetValue("x");
         value.Should().BeOfType<NumberExpression>()
             .Which.Value.Should().Be(10);
+    }
+
+    [TestMethod]
+    public void Can_define_a_variable_and_bind_it_to_the_result_of_an_addition_expression()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(define x (+ 2 3))")
+            .Returns("");
+
+        var env = _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("ok"), Times.Once);
+        var value = env.GetValue("x");
+        value.Should().BeOfType<NumberExpression>()
+            .Which.Value.Should().Be(5);
+    }
+
+    [TestMethod]
+    public void A_set_variable_returns_its_value()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("(define x (+ 2 3))")
+            .Returns("x")
+            .Returns("");
+
+        var env = _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("ok"), Times.Once);
+        _printerMock!.Verify(x => x.Print("5"), Times.Once);
+    }
+
+    [TestMethod]
+    public void When_using_an_unbound_variable_an_exception_is_thrown()
+    {
+        _readerMock!.SetupSequence(x => x.Read())
+            .Returns("x")
+            .Returns("");
+
+        // TODO The exception should be catched and written to output instead.
+        _sut!.Invoking(x => x.Run())
+            .Should().Throw<UnboundVariableException>()
+            .WithMessage("Variable 'x' is unbound.");
     }
 }

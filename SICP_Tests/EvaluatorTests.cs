@@ -75,40 +75,12 @@ public class EvaluatorTests
     }
 
     //[TestMethod]
-    //public void Can_define_a_variable_and_bind_it_to_an_expression()
-    //{
-    //    var result = _sut!.Eval("(define x (+ 1 1))", _env!);
-
-    //    result.ToString().Should().Be("ok");
-    //    var value = _env!.GetValue("x");
-    //    value.IsNumber.Should().BeTrue();
-    //    value.ToString().Should().Be("2");
-    //}
-
-    //[TestMethod]
-    //public void A_variable_returns_its_value()
-    //{
-    //    _sut!.Eval("(define x 10)", _env!);
-    //    var result = _sut!.Eval("x", _env!);
-
-    //    result.ToString().Should().Be("10");
-    //}
-
-    //[TestMethod]
     //public void A_variable_can_contain_letters_digits_hyphens_and_exclamation_mark()
     //{
     //    _sut!.Eval("(define xyz123-! 10)", _env!);
     //    var result = _sut!.Eval("xyz123-!", _env!);
 
     //    result.ToString().Should().Be("10");
-    //}
-
-    //[TestMethod]
-    //public void When_using_an_unbound_variable_an_exception_is_thrown()
-    //{
-    //    _sut!.Invoking(x => x.Eval("x", _env!))
-    //        .Should().Throw<UnboundVariableException>()
-    //        .WithMessage("Variable 'x' is unbound.");
     //}
 
     //[TestMethod]
