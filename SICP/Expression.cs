@@ -1,4 +1,6 @@
-﻿namespace SICP;
+﻿using System.Runtime.CompilerServices;
+
+namespace SICP;
 
 public abstract class Expression
 {
@@ -41,6 +43,7 @@ public class VariableExpression : Expression
     public override string ToString() => Value;
 }
 
+// TODO Remove class when possible.
 public class ProcedureCallExpression : Expression
 {
     public ProcedureCallExpression(Expression op, List<Expression>? operands)
@@ -107,4 +110,35 @@ public class DefinitionExpression : Expression
 
     public override string ToString() 
         => $"definition {VariableName}={Value}";
+}
+
+public class ListExpression : Expression
+{
+    private readonly Expression? _left;
+    private readonly Expression? _right;
+
+    public ListExpression(Expression? left, Expression? right)
+    {
+        _left = left;
+        _right = right;
+    }
+
+    protected ListExpression() { }
+
+    public Expression Car => _left ?? throw new Exception("Cannot 'Car' the empty list.");
+    public Expression Cdr => _right ?? throw new Exception("Cannot 'Cdr' the empty list.");
+
+    public override string ToString()
+        => "List";
+}
+
+public class EmptyListExpression : ListExpression
+{
+    private EmptyListExpression() : base(null, null) 
+    {        
+    }
+
+    public static EmptyListExpression Instance { get; } = new EmptyListExpression();
+
+    public override string ToString() => "()";
 }

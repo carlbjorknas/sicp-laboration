@@ -41,7 +41,7 @@ public class ParserTests
     }
 
     [TestMethod]
-    public void When_parsing_an_addition_without_operands_then_a_procedure_call_expression_having_plus_as_operator_and_no_operands_is_returned()
+    public void When_parsing_an_addition_without_operands_then_a_list_expression_is_returned()
     {
         var sut = new Parser();
         var tokens = new Token[]
@@ -53,13 +53,12 @@ public class ParserTests
         var result = sut.Parse(tokens);
 
         result.Should().NotBeNull()
-            .And.BeOfType<ProcedureCallExpression>();
+            .And.BeOfType<ListExpression>();
 
-        var call = (ProcedureCallExpression)result;
-        call.Operator.Should().BeOfType<VariableExpression>();
-        ((VariableExpression)call.Operator).Value.Should().Be("+");
-
-        call.Operands.Should().BeEmpty();
+        var list = (ListExpression)result;
+        list.Car.Should().BeOfType<VariableExpression>()
+            .Which.Value.Should().Be("+");
+        list.Cdr.Should().BeSameAs(EmptyListExpression.Instance);
     }
 
     [TestMethod]
@@ -77,17 +76,36 @@ public class ParserTests
         var result = sut.Parse(tokens);
 
         result.Should().NotBeNull()
-            .And.BeOfType<ProcedureCallExpression>();
+            .And.BeOfType<ListExpression>();
 
-        var call = (ProcedureCallExpression)result;
-        call.Operator.Should().BeOfType<VariableExpression>()
+        var pair1 = (ListExpression)result;
+        pair1.Car.Should().BeOfType<VariableExpression>()
             .Which.Value.Should().Be("+");
+        pair1.Cdr.Should().BeOfType<ListExpression>();
 
-        call.Operands.Should().HaveCount(2);
-        call.Operands[0].Should().BeOfType<NumberExpression>()
+        var pair2 = (ListExpression)pair1.Cdr;
+        pair2.Car.Should().BeOfType<NumberExpression>()
             .Which.Value.Should().Be(2);
-        call.Operands[1].Should().BeOfType<NumberExpression>()
+        pair2.Cdr.Should().BeOfType<ListExpression>();
+
+        var pair3 = (ListExpression)pair2.Cdr;
+        pair3.Car.Should().BeOfType<NumberExpression>()
             .Which.Value.Should().Be(3);
+        pair3.Cdr.Should().BeSameAs(EmptyListExpression.Instance);
+
+
+        //result.Should().NotBeNull()
+        //    .And.BeOfType<ProcedureCallExpression>();
+
+        //var call = (ProcedureCallExpression)result;
+        //call.Operator.Should().BeOfType<VariableExpression>()
+        //    .Which.Value.Should().Be("+");
+
+        //call.Operands.Should().HaveCount(2);
+        //call.Operands[0].Should().BeOfType<NumberExpression>()
+        //    .Which.Value.Should().Be(2);
+        //call.Operands[1].Should().BeOfType<NumberExpression>()
+        //    .Which.Value.Should().Be(3);
     }
 
     [TestMethod]

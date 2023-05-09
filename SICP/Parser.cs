@@ -18,7 +18,8 @@ public class Parser
                 {
                     return ParseDefinition(ref tokens);
                 }
-                return ParseProcedureCall(ref tokens);
+                tokens = tokens[1..];
+                return CreateList(ref tokens);
             }
             if (tokens.First() is BoolToken bt)
             {
@@ -66,27 +67,26 @@ public class Parser
         return new DefinitionExpression(identifierToken.Value, value);
     }
 
-    private ProcedureCallExpression ParseProcedureCall(ref Token[] tokens)
+    private ListExpression CreateList(ref Token[] tokens)
     {
-        if (tokens[1].IsEndingParen)
-            throw new Exception("A procedure call requires an operator.");
+        if (!tokens.Any())
+            throw new Exception("Expression is incorrectly ended.");
 
-        tokens = tokens[1..];
-        var op = InternalParse(ref tokens);
+        if (tokens.First().IsEndingParen)
+            return EmptyListExpression.Instance;
 
-        var operands = new List<Expression>();
-        while (true)
+        if (tokens.First().IsStartingParen)
         {
-            if (!tokens.Any())
-                throw new Exception("A procedure call must end with a parenthesis.");
-            if (tokens[0].IsEndingParen)
-            {
-                tokens = tokens[1..];
-                break;
-            }
-            operands.Add(InternalParse(ref tokens));
+            var rest = tokens[1..];
+            var left = CreateList(ref rest);
+            var right = CreateList(ref rest);
+            return new ListExpression(left, right);
         }
-
-        return new ProcedureCallExpression(op, operands);
+        else
+        {
+            var first = tokens[..1];
+            var rest = tokens[1..];
+            return new ListExpression(InternalParse(ref first), CreateList(ref rest));
+        }
     }
 }
