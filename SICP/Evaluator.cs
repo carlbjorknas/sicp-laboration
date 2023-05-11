@@ -12,14 +12,14 @@ public class Evaluator
         {
             return env.GetValue(ve.Value);
         }
-        else if (expression is DefinitionExpression definitionExpression)
+        else if (IsDefinition(expression))
         {
-            return HandleDefinition(definitionExpression, env);
+            return HandleDefinition((ListExpression)expression, env);
         }
-        else if (expression is ProcedureCallExpression call)
+        else if (expression is ListExpression list)
         {
-            var evaluatedOperator = Eval(call.Operator, env);
-            var evaluatedOperands = call.Operands.Select(x => Eval(x, env)).ToList();
+            var evaluatedOperator = Eval(Operator(list), env);
+            var evaluatedOperands = EvalOperands(Operands(list), env).ToList();
             return Apply(evaluatedOperator, evaluatedOperands, env);
         }
 
@@ -29,11 +29,31 @@ public class Evaluator
     private bool IsSelfEvaluating(Expression expr)
         => expr is BooleanExpression or NumberExpression;
 
-    private Expression HandleDefinition(DefinitionExpression definitionExpression, Environment env)
+    private static bool IsTaggedList(Expression expr, string tag)
+        => expr is ListExpression le && le.Car is VariableExpression ve && ve.Value == tag;
+
+    static bool IsDefinition(Expression expr) => IsTaggedList(expr, "define");
+    static string DefinitionVariable(ListExpression list) => ((VariableExpression)list.Cadr).Value;
+    static Expression DefinitionValue(ListExpression list) => list.Caddr;
+
+    static Expression Operator(ListExpression list) => list.Car;
+    static ListExpression Operands(ListExpression list) => (ListExpression)list.Cdr;
+
+    private Expression HandleDefinition(ListExpression list, Environment env)
     {
-        var variableValue = Eval(definitionExpression.Value, env);
-        env.AddVariable(definitionExpression.VariableName, variableValue);
+        var name = DefinitionVariable(list);
+        var evaluatedValue = Eval(DefinitionValue(list), env);
+        env.AddVariable(name, evaluatedValue);
         return new VariableExpression("ok");
+    }
+
+    public IEnumerable<Expression> EvalOperands(ListExpression list, Environment env)
+    {
+        while (list != EmptyListExpression.Instance)
+        {
+            yield return Eval(list.Car, env);
+            list = (ListExpression)list.Cdr;
+        }
     }
 
     private Expression Apply(Expression op, List<Expression> operands, Environment env)
@@ -45,30 +65,4 @@ public class Evaluator
 
         throw new Exception($"'{op}' is not a procedure.");
     }
-
-    //public EvalResult Eval(string expression, Environment env)
-    //{
-    //    if (IsSelfEvaluating(expression, out var evalResult))
-    //        return evalResult!;
-
-    //    if (IsVariable(expression))
-    //        return env.GetValue(expression);
-
-    //    if (IsDefinition(expression))
-    //        return HandleDefinition(expression, env);
-
-    //    if (IsApplication(expression))
-    //    {            
-    //        var op = Eval(GetOperator(expression), env);
-    //        var operands = GetOperands(expression).ToList();
-    //        return Apply(op, operands, env);
-    //    }
-
-    //    throw new Exception($"Unknown expression type.'{expression}'");
-    //}
-
-    //private bool IsDefinition(string expression)
-    //{
-    //    return GetOperator(expression) == "define";
-    //}
 }
