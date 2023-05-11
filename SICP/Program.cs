@@ -9,7 +9,7 @@ repl.Run();
 
 class Reader : IReader
 {
-    public string Read() => Console.ReadLine();
+    public string Read() => Console.ReadLine()!;
 }
 
 class Printer : IPrinter

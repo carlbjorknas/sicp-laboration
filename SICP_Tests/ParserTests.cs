@@ -5,17 +5,40 @@ using SICP;
 namespace SICP_Tests;
 
 [TestClass]
-public class ParserTests
-{
+public class ParserTests : TestBase
+{ 
+    private bool CompareLists(Expression actual, ListExpression expected)
+    {
+        actual.Should().NotBeNull().And.BeAssignableTo<ListExpression>();
+        var actualList = (ListExpression)actual;
+
+        if (expected == EmptyListExpression.Instance)
+        {
+            actualList.Should().BeSameAs(expected);
+        }
+        else
+        {
+            CompareExpressions(actualList.Car, expected.Car);
+            CompareExpressions(actualList.Cdr, expected.Cdr);
+        }
+        return true;
+    }
+
+    private bool CompareExpressions(Expression actual, Expression expected) => expected switch
+    {
+        ListExpression le => CompareLists(actual, le),
+        BooleanExpression be1 => actual is BooleanExpression be2 && be1.Value == be2.Value,
+        NumberExpression ne1 => actual is NumberExpression ne2 && ne1.Value == ne2.Value,
+        VariableExpression ve1 => actual is VariableExpression ve2 && ve1.Value == ve2.Value,
+        _ => throw new System.NotImplementedException()
+    };
+
     [TestMethod]
     public void When_parsing_a_true_bool_token_then_a_bool_expression_having_the_value_true_is_returned()
     {
         var sut = new Parser();
         var result = sut.Parse(new[] { new BoolToken(true) });
-
-        result.Should().NotBeNull()
-            .And.BeOfType<BooleanExpression>();
-        ((BooleanExpression)result).Value.Should().BeTrue();        
+        CompareExpressions(result, new BooleanExpression(true));
     }
 
     [TestMethod]
@@ -24,9 +47,7 @@ public class ParserTests
         var sut = new Parser();
         var result = sut.Parse(new[] { new NumberToken(123) });
 
-        result.Should().NotBeNull()
-            .And.BeOfType<NumberExpression>();
-        ((NumberExpression)result).Value.Should().Be(123);
+        CompareExpressions(result, new NumberExpression(123));
     }
 
     [TestMethod]
@@ -34,10 +55,7 @@ public class ParserTests
     {
         var sut = new Parser();
         var result = sut.Parse(new[] { new IdentifierToken("+") });
-
-        result.Should().NotBeNull()
-            .And.BeOfType<VariableExpression>();
-        ((VariableExpression)result).Value.Should().Be("+");
+        CompareExpressions(result, new VariableExpression("+"));
     }
 
     [TestMethod]
@@ -50,15 +68,9 @@ public class ParserTests
             new IdentifierToken("+"),
             new PunctuatorToken(")")
         };
-        var result = sut.Parse(tokens);
-
-        result.Should().NotBeNull()
-            .And.BeOfType<ListExpression>();
-
-        var list = (ListExpression)result;
-        list.Car.Should().BeOfType<VariableExpression>()
-            .Which.Value.Should().Be("+");
-        list.Cdr.Should().BeSameAs(EmptyListExpression.Instance);
+        var result = sut.Parse(tokens); 
+        
+        CompareLists(result, CreateList(new VariableExpression("+")));
     }
 
     [TestMethod]
@@ -75,37 +87,13 @@ public class ParserTests
         };
         var result = sut.Parse(tokens);
 
-        result.Should().NotBeNull()
-            .And.BeOfType<ListExpression>();
+        var expectedList = CreateList(
+            new VariableExpression("+"),
+            new NumberExpression(2),
+            new NumberExpression(3)
+         );
 
-        var pair1 = (ListExpression)result;
-        pair1.Car.Should().BeOfType<VariableExpression>()
-            .Which.Value.Should().Be("+");
-        pair1.Cdr.Should().BeOfType<ListExpression>();
-
-        var pair2 = (ListExpression)pair1.Cdr;
-        pair2.Car.Should().BeOfType<NumberExpression>()
-            .Which.Value.Should().Be(2);
-        pair2.Cdr.Should().BeOfType<ListExpression>();
-
-        var pair3 = (ListExpression)pair2.Cdr;
-        pair3.Car.Should().BeOfType<NumberExpression>()
-            .Which.Value.Should().Be(3);
-        pair3.Cdr.Should().BeSameAs(EmptyListExpression.Instance);
-
-
-        //result.Should().NotBeNull()
-        //    .And.BeOfType<ProcedureCallExpression>();
-
-        //var call = (ProcedureCallExpression)result;
-        //call.Operator.Should().BeOfType<VariableExpression>()
-        //    .Which.Value.Should().Be("+");
-
-        //call.Operands.Should().HaveCount(2);
-        //call.Operands[0].Should().BeOfType<NumberExpression>()
-        //    .Which.Value.Should().Be(2);
-        //call.Operands[1].Should().BeOfType<NumberExpression>()
-        //    .Which.Value.Should().Be(3);
+        CompareLists(result, expectedList);        
     }
 
     [TestMethod]
@@ -121,16 +109,8 @@ public class ParserTests
         };
         var result = sut.Parse(tokens);
 
-        result.Should().NotBeNull()
-            .And.BeOfType<ProcedureCallExpression>();
-
-        var call = (ProcedureCallExpression)result;
-        call.Operator.Should().BeOfType<VariableExpression>()
-            .Which.Value.Should().Be("-");
-
-        call.Operands.Should().HaveCount(1);
-        call.Operands[0].Should().BeOfType<NumberExpression>()
-            .Which.Value.Should().Be(2);
+        var expectedList = CreateList(new VariableExpression("-"), new NumberExpression(2));
+        CompareLists(result, expectedList);
     }
 
     [TestMethod]
@@ -146,11 +126,11 @@ public class ParserTests
             new PunctuatorToken(")")
         };
         var result = sut.Parse(tokens);
-
-        result.Should().NotBeNull().And.BeOfType<DefinitionExpression>();
-        var definition = (DefinitionExpression)result;
-        definition.VariableName.Should().Be("x");
-        definition.Value.Should().BeOfType<NumberExpression>()
-            .Which.Value.Should().Be(10);
+        var expectedList = CreateList(
+            new VariableExpression("define"),
+            new VariableExpression("x"),
+            new NumberExpression(10)
+        );
+        CompareLists(result, expectedList);
     }
 }

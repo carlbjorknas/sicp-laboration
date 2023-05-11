@@ -43,21 +43,6 @@ public class VariableExpression : Expression
     public override string ToString() => Value;
 }
 
-// TODO Remove class when possible.
-public class ProcedureCallExpression : Expression
-{
-    public ProcedureCallExpression(Expression op, List<Expression>? operands)
-    {
-        Operator = op;
-        Operands = operands ?? new List<Expression>();
-    }
-
-    public Expression Operator { get; }
-    public List<Expression> Operands { get; }
-
-    public override string ToString() => $"Procedure call. Operator: '{Operator}'. {Operands.Count} operands.";
-}
-
 public abstract class PrimitiveProcedure : Expression
 {
     public abstract Expression Apply(List<Expression> operands, Environment env);
@@ -97,21 +82,6 @@ public class PrimitiveProcedureMinus : PrimitiveProcedure
     }
 }
 
-public class DefinitionExpression : Expression
-{
-    public DefinitionExpression(string variableName, Expression value)
-    {
-        VariableName = variableName;
-        Value = value;
-    }
-
-    public string VariableName { get; }
-    public Expression Value { get; }
-
-    public override string ToString() 
-        => $"definition {VariableName}={Value}";
-}
-
 public class ListExpression : Expression
 {
     private readonly Expression? _left;
@@ -127,6 +97,9 @@ public class ListExpression : Expression
 
     public Expression Car => _left ?? throw new Exception("Cannot 'Car' the empty list.");
     public Expression Cdr => _right ?? throw new Exception("Cannot 'Cdr' the empty list.");
+    public Expression Cadr => ((ListExpression)Cdr).Car;
+    public Expression Cddr => ((ListExpression)Cdr).Cdr;
+    public Expression Caddr => ((ListExpression)Cddr).Car;
 
     public override string ToString()
         => "List";
