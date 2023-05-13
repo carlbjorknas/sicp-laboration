@@ -192,4 +192,20 @@ public class REPLTests : TestBase
             .Should().Throw<UnboundVariableException>()
             .WithMessage("Variable 'x' is unbound.");
     }
+
+    [TestMethod]
+    public void An_if_expression_with_a_true_predicate_returns_its_consequent()
+    {
+        SetupInputSequence("(if true 1 2)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("1"), Times.Once);
+    }
+
+    [TestMethod]
+    public void An_if_expression_with_a_false_predicate_returns_its_alternative()
+    {
+        SetupInputSequence("(if false 1 2)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("2"), Times.Once);
+    }
 }

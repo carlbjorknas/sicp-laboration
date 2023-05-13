@@ -12,28 +12,29 @@ public class Lexer
             if (text.StartsWith(" "))
             {
                 text = text[1..];
+                continue;
             }
-            else if (text.StartsWith("(") || text.StartsWith(")"))
+            if (text.StartsWith("(") || text.StartsWith(")"))
             {
                 tokens.Add(new PunctuatorToken(text[..1]));
                 text = text[1..];
+                continue;
             }
-            else if (text == "true")
-                return new[] { new BoolToken(true) };
-            else if (text == "false")
-                return new[] { new BoolToken(false) };
-            else if (text.BeginsWithDigit())
+
+            var tokenText = text.TakeUntilNextPunctuation();
+            text = text[tokenText.Length..];
+
+            if (tokenText == "true")
+                tokens.Add(new BoolToken(true));
+            else if (tokenText == "false")
+                tokens.Add(new BoolToken(false));
+            else if (tokenText.BeginsWithDigit())
             {
-                tokens.Add(GetNumberToken(ref text));
+                tokens.Add(GetNumberToken(tokenText));
             }
-            else if (text.StartsWith("+") || text.StartsWith("-"))
+            else if (tokenText == "+" || tokenText == "-" || tokenText.BeginsWithLetter())
             {
-                tokens.Add(new IdentifierToken(text[..1]));
-                text = text[1..];
-            }
-            else if (text.BeginsWithLetter())
-            {
-                tokens.Add(GetIdentifierToken(ref text));
+                tokens.Add(new IdentifierToken(tokenText));
             }
             else
                 throw new Exception($"Cannot tokenize '{text}'.");
@@ -42,23 +43,14 @@ public class Lexer
         return tokens.ToArray();
     }
 
-    private NumberToken GetNumberToken(ref string text)
+    private NumberToken GetNumberToken(string tokenText)
     {
-        var tokenText = text.TakeUntilNextPunctuation();
         if (int.TryParse(tokenText, out var number))
         {            
-            text = text[tokenText.Length..];
             return new NumberToken(number);
         }
 
         throw new Exception($"'{tokenText}' is not a valid number.");
-    }
-
-    private IdentifierToken GetIdentifierToken(ref string text)
-    {
-        var tokenText = text.TakeUntilNextPunctuation();
-        text = text[tokenText.Length..];
-        return new IdentifierToken(tokenText);
     }
 }
 

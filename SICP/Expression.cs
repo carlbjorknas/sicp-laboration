@@ -100,6 +100,8 @@ public class ListExpression : Expression
     public Expression Cadr => ((ListExpression)Cdr).Car;
     public Expression Cddr => ((ListExpression)Cdr).Cdr;
     public Expression Caddr => ((ListExpression)Cddr).Car;
+    public Expression Cdddr => ((ListExpression)Cddr).Cdr;
+    public Expression Cadddr => ((ListExpression)Cdddr).Car;
 
     public override string ToString()
         => "List";

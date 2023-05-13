@@ -12,9 +12,13 @@ public class Evaluator
         {
             return env.GetValue(ve.Value);
         }
-        else if (IsDefinition(expression))
+        else if (IsAssignment(expression))
         {
-            return HandleDefinition((ListExpression)expression, env);
+            return EvaluateAssignment((ListExpression)expression, env);
+        }
+        else if (IsIf(expression))
+        {
+            return EvaluateIf((ListExpression)expression, env);
         }
         else if (expression is ListExpression list)
         {
@@ -32,20 +36,38 @@ public class Evaluator
     private static bool IsTaggedList(Expression expr, string tag)
         => expr is ListExpression le && le.Car is VariableExpression ve && ve.Value == tag;
 
-    static bool IsDefinition(Expression expr) => IsTaggedList(expr, "define");
-    static string DefinitionVariable(ListExpression list) => ((VariableExpression)list.Cadr).Value;
-    static Expression DefinitionValue(ListExpression list) => list.Caddr;
-
-    static Expression Operator(ListExpression list) => list.Car;
-    static ListExpression Operands(ListExpression list) => (ListExpression)list.Cdr;
-
-    private Expression HandleDefinition(ListExpression list, Environment env)
+    static bool IsAssignment(Expression expr) => IsTaggedList(expr, "define");
+    static string AssignmentVariable(ListExpression list) => ((VariableExpression)list.Cadr).Value;
+    static Expression AssignmentValue(ListExpression list) => list.Caddr;
+    private Expression EvaluateAssignment(ListExpression list, Environment env)
     {
-        var name = DefinitionVariable(list);
-        var evaluatedValue = Eval(DefinitionValue(list), env);
+        var name = AssignmentVariable(list);
+        var evaluatedValue = Eval(AssignmentValue(list), env);
         env.AddVariable(name, evaluatedValue);
         return new VariableExpression("ok");
     }
+
+    static bool IsIf(Expression expression) => IsTaggedList(expression, "if");
+    static Expression IfPredicate(ListExpression list) => list.Cadr;
+    static Expression IfConsequent(ListExpression list) => list.Caddr;
+    static Expression IfAlternative(ListExpression list) => list.Cadddr;
+
+    Expression EvaluateIf(ListExpression expression, Environment env)
+    {
+        var predicateExpression = IfPredicate(expression);
+        var predicate = Eval(predicateExpression, env);
+        var predBool = predicate as BooleanExpression;
+        if (predBool == null)
+            throw new Exception($"Predicate expression '{predicateExpression}' does not evaluate to a boolean.");
+
+        if (predBool.Value)
+            return Eval(IfConsequent(expression), env);
+        else
+            return Eval(IfAlternative(expression), env);
+    }
+
+    static Expression Operator(ListExpression list) => list.Car;
+    static ListExpression Operands(ListExpression list) => (ListExpression)list.Cdr;
 
     public IEnumerable<Expression> EvalOperands(ListExpression list, Environment env)
     {
