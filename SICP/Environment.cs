@@ -8,8 +8,8 @@ public class Environment
 
     public Environment()
     {
-        AddVariable("+", PrimitiveProcedurePlus.Instance);
-        AddVariable("-", PrimitiveProcedureMinus.Instance);
+        AddVariable("+", new PrimitiveProcedurePlus());
+        AddVariable("-", new PrimitiveProcedureMinus());
     }
 
     public void AddVariable(string name, Expression value)

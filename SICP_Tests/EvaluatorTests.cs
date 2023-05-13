@@ -40,7 +40,7 @@ public class EvaluatorTests : TestBase
     {
         var expression = new VariableExpression("+");
         var result = _sut!.Eval(expression, _env!);
-        result.Should().BeSameAs(PrimitiveProcedurePlus.Instance);
+        result.Should().BeOfType<PrimitiveProcedurePlus>();
     }
 
     [TestMethod]

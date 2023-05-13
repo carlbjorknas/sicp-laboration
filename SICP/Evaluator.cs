@@ -20,6 +20,10 @@ public class Evaluator
         {
             return EvaluateIf((ListExpression)expression, env);
         }
+        else if (IsAnd(expression))
+        {
+            return EvaluateAnd((ListExpression)expression, env);
+        }
         else if (expression is ListExpression list)
         {
             var evaluatedOperator = Eval(Operator(list), env);
@@ -50,20 +54,44 @@ public class Evaluator
     static bool IsIf(Expression expression) => IsTaggedList(expression, "if");
     static Expression IfPredicate(ListExpression list) => list.Cadr;
     static Expression IfConsequent(ListExpression list) => list.Caddr;
-    static Expression IfAlternative(ListExpression list) => list.Cadddr;
+    static Expression IfAlternative(ListExpression list)
+        => list.Cdddr != EmptyListExpression.Instance ? list.Cadddr : new BooleanExpression(false);
 
     Expression EvaluateIf(ListExpression expression, Environment env)
     {
         var predicateExpression = IfPredicate(expression);
         var predicate = Eval(predicateExpression, env);
-        var predBool = predicate as BooleanExpression;
-        if (predBool == null)
-            throw new Exception($"Predicate expression '{predicateExpression}' does not evaluate to a boolean.");
 
-        if (predBool.Value)
-            return Eval(IfConsequent(expression), env);
+        if (predicate is BooleanExpression be && !be.Value)
+            return Eval(IfAlternative(expression), env);        
         else
-            return Eval(IfAlternative(expression), env);
+            return Eval(IfConsequent(expression), env);
+
+    }
+
+    static List<Expression> ConvertToDotNetList(ListExpression list)
+    {
+        var dotNetList = new List<Expression>();
+        while (list != EmptyListExpression.Instance)
+        {
+            dotNetList.Add(list.Car);
+            list = (ListExpression)list.Cdr;
+        }
+        return dotNetList;
+    }
+
+    static bool IsAnd(Expression expression) => IsTaggedList(expression, "and");
+    Expression EvaluateAnd(ListExpression list, Environment env)
+    {
+        var dotNetlist = ConvertToDotNetList((ListExpression)list.Cdr);
+        Expression lastEvaluatedExpression = new BooleanExpression(true);
+        foreach(var expression in dotNetlist)
+        {
+            lastEvaluatedExpression = Eval(expression, env);
+            if (lastEvaluatedExpression is BooleanExpression b && !b.Value)
+                return new BooleanExpression(false);
+        }
+        return lastEvaluatedExpression;
     }
 
     static Expression Operator(ListExpression list) => list.Car;

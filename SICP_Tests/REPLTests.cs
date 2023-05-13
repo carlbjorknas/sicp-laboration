@@ -208,4 +208,66 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("2"), Times.Once);
     }
+
+    [TestMethod]
+    public void When_an_if_expressions_predicate_is_false_and_it_has_no_alternative_then_false_is_returned()
+    {
+        SetupInputSequence("(if false 1)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("false"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Can_evaluate_an_if_epxression_having_complex_expression_predicate_and_consequent()
+    {
+        SetupInputSequence("(if (and true true) (+ 1 1))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("2"), Times.Once);
+    }
+
+    [TestMethod]
+    public void If_with_not_false_predicate_is_seen_as_true()
+    {
+        SetupInputSequence("(if 1 2 3)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("2"), Times.Once);
+    }
+
+    [TestMethod]
+    public void And_without_arguments_returns_true()
+    {
+        SetupInputSequence("(and)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("true"), Times.Once);
+    }
+
+    [TestMethod]
+    [DataRow("false", "true", "true")]
+    [DataRow("true", "false", "true")]
+    [DataRow("true", "true", "false")]
+    public void And_with_a_false_argument_returns_false(string arg1, string arg2, string arg3)
+    {
+        SetupInputSequence($"(and {arg1} {arg2} {arg3})");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("false"), Times.Once);
+    }
+
+    [TestMethod]
+    [DataRow("true", "true", "true")]
+    [DataRow("1", "2", "3")]
+    public void And_without_a_false_argument_returns_its_last_argument(string arg1, string arg2, string arg3)
+    {
+        SetupInputSequence($"(and {arg1} {arg2} {arg3})");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print(arg3), Times.Once);
+    }
+
+    [TestMethod]
+    public void And_does_not_evaluate_arguments_coming_after_a_false()
+    {
+        // if "a" was evaluated it would result in a UnboundVariableException.
+        SetupInputSequence($"(and false a)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("false"), Times.Once);
+    }
 }

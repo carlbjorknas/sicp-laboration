@@ -51,8 +51,6 @@ public abstract class PrimitiveProcedure : Expression
 
 public class PrimitiveProcedurePlus : PrimitiveProcedure
 {
-    public static PrimitiveProcedurePlus Instance { get; } = new PrimitiveProcedurePlus();
-
     public override Expression Apply(List<Expression> operands, Environment env)
     {
         // TODO Handle operands that are not numbers.
@@ -63,8 +61,6 @@ public class PrimitiveProcedurePlus : PrimitiveProcedure
 
 public class PrimitiveProcedureMinus : PrimitiveProcedure
 {
-    public static PrimitiveProcedureMinus Instance { get; } = new PrimitiveProcedureMinus();
-
     public override Expression Apply(List<Expression> operands, Environment env)
     {
         // TODO Handle operands that are not numbers.
