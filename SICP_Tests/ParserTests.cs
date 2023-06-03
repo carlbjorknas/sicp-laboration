@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SICP;
+using SICP.Expressions;
 
 namespace SICP_Tests;
 

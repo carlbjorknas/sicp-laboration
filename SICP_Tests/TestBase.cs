@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using SICP;
+using SICP.Expressions;
 using System;
 using System.Linq;
 

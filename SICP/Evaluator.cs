@@ -1,4 +1,5 @@
-﻿using SICP.SpecialForms;
+﻿using SICP.Expressions;
+using SICP.SpecialForms;
 
 namespace SICP;
 
@@ -20,6 +21,9 @@ public class Evaluator
 
         else if (SpecialFormAnd.Recognises(expression))
             return SpecialFormAnd.Evaluate(expression, this, env);
+
+        else if (SpecialFormOr.Recognises(expression))
+            return SpecialFormOr.Evaluate(expression, this, env);
 
         else if (expression is ListExpression list)
         {

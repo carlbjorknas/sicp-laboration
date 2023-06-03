@@ -1,4 +1,6 @@
-﻿namespace SICP.SpecialForms;
+﻿using SICP.Expressions;
+
+namespace SICP.SpecialForms;
 
 internal static class SpecialFormAssignment
 {

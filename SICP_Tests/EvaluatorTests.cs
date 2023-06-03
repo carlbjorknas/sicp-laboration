@@ -2,6 +2,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SICP;
 using SICP.Exceptions;
+using SICP.Expressions;
 using System.Collections.Generic;
 
 namespace SICP_Tests;

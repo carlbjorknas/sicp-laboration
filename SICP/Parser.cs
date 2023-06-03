@@ -1,4 +1,6 @@
-﻿namespace SICP;
+﻿using SICP.Expressions;
+
+namespace SICP;
 
 public class Parser
 {

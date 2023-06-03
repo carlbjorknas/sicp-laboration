@@ -1,4 +1,5 @@
 ﻿using SICP.Exceptions;
+using SICP.Expressions;
 
 namespace SICP;
 

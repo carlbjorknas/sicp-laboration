@@ -1,4 +1,6 @@
-﻿namespace SICP.SpecialForms;
+﻿using SICP.Expressions;
+
+namespace SICP.SpecialForms;
 
 static internal class SpecialFormIf
 {
@@ -6,7 +8,9 @@ static internal class SpecialFormIf
     static Expression IfPredicate(ListExpression list) => list.Cadr;
     static Expression IfConsequent(ListExpression list) => list.Caddr;
     static Expression IfAlternative(ListExpression list)
-        => list.Cdddr != EmptyListExpression.Instance ? list.Cadddr : new BooleanExpression(false);
+        => list.Cdddr != EmptyListExpression.Instance 
+            ? list.Cadddr 
+            : new BooleanExpression(false);
 
     static public Expression Evaluate(Expression expression, Evaluator evaluator, Environment env)
     {
