@@ -227,7 +227,7 @@ public class REPLTests : TestBase
     }
 
     [TestMethod]
-    public void If_with_not_false_predicate_is_seen_as_true()
+    public void When_the_predicate_is_a_non_boolean_it_is_evaluated_as_true()
     {
         SetupInputSequence("(if 1 2 3)");
         _sut!.Run();
