@@ -13,6 +13,7 @@ public class Environment
         AddVariable("-", new PrimitiveProcedureMinus());
         AddVariable("not", new PrimitiveProcedureNot());
         AddVariable("<", new PrimitiveProcedureLt());
+        AddVariable("<=", new PrimitiveProcedureLte());
         AddVariable(">=", new PrimitiveProcedureGte());
         AddVariable(">", new PrimitiveProcedureGt());
     }
