@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Newtonsoft.Json.Linq;
 using SICP;
 using SICP.Exceptions;
 using SICP.Expressions;
@@ -320,38 +321,19 @@ public class REPLTests : TestBase
     }
 
     [TestMethod]
-    public void GreaterThan_returns_true_when_the_first_argument_is_greater_than_the_second()
+    [DataRow("<", "1", "1", "false")]
+    [DataRow("<", "2", "1", "false")]
+    [DataRow("<", "1", "2", "true")]
+    [DataRow(">=", "1", "1", "true")]
+    [DataRow(">=", "1", "2", "false")]
+    [DataRow(">=", "2", "1", "true")]
+    [DataRow(">", "1", "1", "false")]
+    [DataRow(">", "1", "2", "false")]
+    [DataRow(">", "2", "1", "true")]
+    public void Can_do_arithmetic_comparisons(string op, string arg1, string arg2, string expectedResult)
     {
-        SetupInputSequence("(> 2 1)");
+        SetupInputSequence($"({op} {arg1} {arg2})");
         _sut!.Run();
-        _printerMock!.Verify(x => x.Print("true"), Times.Once);
-    }
-
-    [TestMethod]
-    [DataRow("1")]
-    [DataRow("2")]
-    public void GreaterThan_returns_false_when_the_first_argument_is_lte_than_the_second(string value)
-    {
-        SetupInputSequence($"(> 1 {value})");
-        _sut!.Run();
-        _printerMock!.Verify(x => x.Print("false"), Times.Once);
-    }
-
-    [TestMethod]
-    public void LessThan_returns_true_when_the_first_argument_is_less_than_the_second()
-    {
-        SetupInputSequence("(< 1 2)");
-        _sut!.Run();
-        _printerMock!.Verify(x => x.Print("true"), Times.Once);
-    }
-
-    [TestMethod]
-    [DataRow("1")]
-    [DataRow("2")]
-    public void LessThan_returns_false_when_the_first_argument_is_gte_than_the_second(string value)
-    {
-        SetupInputSequence($"(< 2 {value})");
-        _sut!.Run();
-        _printerMock!.Verify(x => x.Print("false"), Times.Once);
+        _printerMock!.Verify(x => x.Print(expectedResult), Times.Once);
     }
 }
