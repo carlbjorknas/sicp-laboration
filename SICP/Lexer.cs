@@ -62,7 +62,7 @@ internal static class StringExtensions
         => Regex.IsMatch(text[..1], "[0-9]");
 
     public static bool BeginsWithValidVariableChar(this string text)
-        => Regex.IsMatch(text[..1], "[a-z>]", RegexOptions.IgnoreCase);
+        => Regex.IsMatch(text[..1], "[a-z><]", RegexOptions.IgnoreCase);
 
     public static string TakeUntilNextPunctuation(this string text)
     {

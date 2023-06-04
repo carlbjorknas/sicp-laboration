@@ -336,4 +336,22 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("false"), Times.Once);
     }
+
+    [TestMethod]
+    public void LessThan_returns_true_when_the_first_argument_is_less_than_the_second()
+    {
+        SetupInputSequence("(< 1 2)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("true"), Times.Once);
+    }
+
+    [TestMethod]
+    [DataRow("1")]
+    [DataRow("2")]
+    public void LessThan_returns_false_when_the_first_argument_is_gte_than_the_second(string value)
+    {
+        SetupInputSequence($"(< 2 {value})");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("false"), Times.Once);
+    }
 }
