@@ -13,6 +13,9 @@ public class Evaluator
         else if (expression is VariableExpression ve)
             return env.GetValue(ve.Value);
 
+        else if (SpecialFormQuote.Recognises(expression))
+            return SpecialFormQuote.Evaluate(expression);
+
         else if (SpecialFormAssignment.Recognises(expression))
             return SpecialFormAssignment.Evaluate(expression, this, env);
 

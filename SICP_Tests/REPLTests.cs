@@ -339,4 +339,12 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print(expectedResult), Times.Once);
     }
+
+    [TestMethod]
+    public void Can_quote_a_value()
+    {
+        SetupInputSequence($"(quote abc)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("abc"), Times.Once);
+    }
 }
