@@ -11,6 +11,7 @@ public class Environment
     {
         AddVariable("+", new PrimitiveProcedurePlus());
         AddVariable("-", new PrimitiveProcedureMinus());
+        AddVariable("not", new PrimitiveProcedureNot());
     }
 
     public void AddVariable(string name, Expression value)
