@@ -374,4 +374,28 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("(1)"), Times.Once);
     }
+
+    [TestMethod]
+    public void Cons_a_number_two_times()
+    {
+        SetupInputSequence($"(cons 1 (cons 2 ()))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(1 2)"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Create_a_dotted_pair()
+    {
+        SetupInputSequence($"(cons 1 2)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(1 . 2)"), Times.Once);
+    }
+
+    [TestMethod]
+    public void A_list_within_a_list()
+    {
+        SetupInputSequence("(cons (cons 1 (cons 2 ())) (cons 3 ()))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("((1 2) 3)"), Times.Once);
+    }
 }

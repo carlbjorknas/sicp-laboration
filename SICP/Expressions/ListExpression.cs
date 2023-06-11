@@ -26,7 +26,28 @@ public class ListExpression : Expression
         if (this == EmptyListExpression.Instance)
             return "()";
 
-        return $"({Car})";
+        var str = "(";
+        var current = this;
+        while (true)
+        {
+            str += $"{current.Car}";
+
+            if (current.Cdr is EmptyListExpression)
+                break;
+            else if (current.Cdr is ListExpression rest)
+            {
+                str += " ";
+                current = rest;
+            }
+            else
+            {
+                str += $" . {current.Cdr}";
+                break;
+            }
+        }
+
+        str += ")";
+        return str;
     }
 
     public List<Expression> AsFlatDotNetList()
