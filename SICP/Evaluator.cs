@@ -39,7 +39,7 @@ public class Evaluator
     }
 
     private bool IsSelfEvaluating(Expression expr)
-        => expr is BooleanExpression or NumberExpression;
+        => expr is BooleanExpression or NumberExpression or EmptyListExpression;
 
     static Expression Operator(ListExpression list) => list.Car;
     static ListExpression Operands(ListExpression list) => (ListExpression)list.Cdr;

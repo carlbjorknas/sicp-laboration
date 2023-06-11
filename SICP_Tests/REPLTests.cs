@@ -358,4 +358,20 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("2"), Times.Once);
     }
+
+    [TestMethod]
+    public void Empty_list_evaluates_to_itself()
+    {
+        SetupInputSequence($"()");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("()"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Cons_a_number_with_empty_list()
+    {
+        SetupInputSequence($"(cons 1 ())");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(1)"), Times.Once);
+    }
 }

@@ -22,7 +22,12 @@ public class ListExpression : Expression
     public Expression Cadddr => ((ListExpression)Cdddr).Car;
 
     public override string ToString()
-        => "List";
+    {
+        if (this == EmptyListExpression.Instance)
+            return "()";
+
+        return $"({Car})";
+    }
 
     public List<Expression> AsFlatDotNetList()
     {
