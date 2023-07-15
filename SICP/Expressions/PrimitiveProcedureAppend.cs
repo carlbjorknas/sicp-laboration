@@ -9,7 +9,9 @@ internal class PrimitiveProcedureAppend : PrimitiveProcedure
 
         var copiedLists = operands
             .Cast<PairExpression>()
-            .Select(x => x.ShallowCopy())
+            // TODO The last one does not need to be copied.
+            // TODO Is shallow enough or need to be deep copy?
+            .Select(x => x.ShallowCopy()) 
             .ToList();
 
         for (var i = 0; i < copiedLists.Count - 1; i++)

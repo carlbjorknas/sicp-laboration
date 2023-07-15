@@ -478,4 +478,9 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("(a b . c)"), Times.Once);
     }
+
+    // TODO Validate the arguments to Append. All but the last must be lists.
+    // How should the use of improper lists (dotted pairs) be handled?
+    // Throw exception or ignore the cdr of the dotted pair
+    // (the online interpreter ignores "(append (cons 'a 'b) 'c) => (a.c)")
 }
