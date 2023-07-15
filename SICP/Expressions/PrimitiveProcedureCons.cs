@@ -6,7 +6,7 @@
         {
             EnsureOperandsHaveExpectedCount(operands, 2, "cons");
 
-            return new ListExpression(operands[0], operands[1]);
+            return new PairExpression(operands[0], operands[1]);
         }
     }
 }

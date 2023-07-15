@@ -7,8 +7,8 @@ internal static class SpecialFormOr
     public static bool Recognises(Expression expression) => expression.IsTaggedList("or");
     public static Expression Evaluate(Expression orExpression, Evaluator evaluator, Environment env)
     {
-        var list = (ListExpression)orExpression;
-        var dotNetlist = ((ListExpression)list.Cdr).AsFlatDotNetList();
+        var list = (PairExpression)orExpression;
+        var dotNetlist = ((PairExpression)list.Cdr).AsFlatDotNetList();
         Expression? lastEvaluatedExpression;
         foreach (var expression in dotNetlist)
         {

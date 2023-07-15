@@ -356,6 +356,22 @@ public class REPLTests : TestBase
         _printerMock!.Verify(x => x.Print("(a b c)"), Times.Once);
     }
 
+    [TestMethod]
+    public void Can_shorthandquote_a_symbol()
+    {
+        SetupInputSequence($"'abc");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("abc"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Can_shorthandquote_a_list()
+    {
+        SetupInputSequence($"'(a b c)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(a b c)"), Times.Once);
+    }
+
     // I´m not sure how eval is supposed to work really, but wanted a fast hack
     // to evaluate the result from a "quote".
     // The user should be able to pass an environment also.

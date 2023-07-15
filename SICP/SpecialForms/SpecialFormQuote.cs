@@ -8,6 +8,6 @@ internal static class SpecialFormQuote
 
     public static Expression Evaluate(Expression expression)
     {
-        return ((ListExpression)expression).Cadr;
+        return ((PairExpression)expression).Cadr;
     }
 }

@@ -14,7 +14,7 @@ public class Lexer
                 text = text[1..];
                 continue;
             }
-            if (text.StartsWith("(") || text.StartsWith(")"))
+            if (text.StartsWith("(") || text.StartsWith(")") || text.StartsWith("'"))
             {
                 tokens.Add(new PunctuatorToken(text[..1]));
                 text = text[1..];

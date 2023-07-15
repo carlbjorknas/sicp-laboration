@@ -25,6 +25,13 @@ public class Parser
         {
             return CreateList();
         }
+        if (CurrentToken.IsShorthandQuote)
+        {
+            GetNextToken();
+            return new PairExpression(
+                new VariableExpression("quote"), 
+                new PairExpression(Parse(), EmptyListExpression.Instance));
+        }
         if (CurrentToken is BoolToken bt)
         {
             return new BooleanExpression(bt.Value);
@@ -41,7 +48,7 @@ public class Parser
         throw new Exception($"Could not parse the token array [{string.Join(", ", _tokens!.Select(x => x.ToString()))}]");
     }
 
-    private ListExpression CreateList()
+    private PairExpression CreateList()
     {
         if (!MoreTokensExists)
             throw new Exception("Expression is incorrectly ended.");
@@ -51,6 +58,6 @@ public class Parser
         if (token.IsEndingParen)
             return EmptyListExpression.Instance;
 
-        return new ListExpression(Parse(), CreateList());
+        return new PairExpression(Parse(), CreateList());
     }
 }

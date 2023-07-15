@@ -1,25 +1,25 @@
 ﻿namespace SICP.Expressions;
 
-public class ListExpression : Expression
+public class PairExpression : Expression
 {
     private readonly Expression? _left;
     private readonly Expression? _right;
 
-    public ListExpression(Expression? left, Expression? right)
+    public PairExpression(Expression? left, Expression? right)
     {
         _left = left;
         _right = right;
     }
 
-    protected ListExpression() { }
+    protected PairExpression() { }
 
     public Expression Car => _left ?? throw new Exception("Cannot 'Car' the empty list.");
     public Expression Cdr => _right ?? throw new Exception("Cannot 'Cdr' the empty list.");
-    public Expression Cadr => ((ListExpression)Cdr).Car;
-    public Expression Cddr => ((ListExpression)Cdr).Cdr;
-    public Expression Caddr => ((ListExpression)Cddr).Car;
-    public Expression Cdddr => ((ListExpression)Cddr).Cdr;
-    public Expression Cadddr => ((ListExpression)Cdddr).Car;
+    public Expression Cadr => ((PairExpression)Cdr).Car;
+    public Expression Cddr => ((PairExpression)Cdr).Cdr;
+    public Expression Caddr => ((PairExpression)Cddr).Car;
+    public Expression Cdddr => ((PairExpression)Cddr).Cdr;
+    public Expression Cadddr => ((PairExpression)Cdddr).Car;
 
     public override string ToString()
     {
@@ -34,7 +34,7 @@ public class ListExpression : Expression
 
             if (current.Cdr is EmptyListExpression)
                 break;
-            else if (current.Cdr is ListExpression rest)
+            else if (current.Cdr is PairExpression rest)
             {
                 str += " ";
                 current = rest;
@@ -57,7 +57,7 @@ public class ListExpression : Expression
         while (list != EmptyListExpression.Instance)
         {
             dotNetList.Add(list.Car);
-            list = (ListExpression)list.Cdr;
+            list = (PairExpression)list.Cdr;
         }
         return dotNetList;
     }

@@ -5,16 +5,16 @@ namespace SICP.SpecialForms;
 static internal class SpecialFormIf
 {
     static public bool Recognises(Expression expression) => expression.IsTaggedList("if");
-    static Expression IfPredicate(ListExpression list) => list.Cadr;
-    static Expression IfConsequent(ListExpression list) => list.Caddr;
-    static Expression IfAlternative(ListExpression list)
+    static Expression IfPredicate(PairExpression list) => list.Cadr;
+    static Expression IfConsequent(PairExpression list) => list.Caddr;
+    static Expression IfAlternative(PairExpression list)
         => list.Cdddr != EmptyListExpression.Instance 
             ? list.Cadddr 
             : new BooleanExpression(false);
 
     static public Expression Evaluate(Expression expression, Evaluator evaluator, Environment env)
     {
-        var list = (ListExpression)expression;
+        var list = (PairExpression)expression;
         var predicateExpression = IfPredicate(list);
         var predicate = evaluator.Eval(predicateExpression, env);
 

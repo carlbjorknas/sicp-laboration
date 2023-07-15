@@ -9,6 +9,9 @@
 
         public bool IsEndingParen
             => this is PunctuatorToken pt && pt.Value == ")";
+
+        public bool IsShorthandQuote
+            => this is PunctuatorToken pt && pt.Value == "'";
     }
 
     public class BoolToken : Token

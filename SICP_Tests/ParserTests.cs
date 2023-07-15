@@ -108,4 +108,21 @@ public class ParserTests : TestBase
         );
         CompareLists(result, expectedList);
     }
+
+    [TestMethod]
+    public void Can_parse_a_shorthandquote_of_a_symbol()
+    {
+        var sut = new Parser();
+        var tokens = new Token[]
+        {
+            new PunctuatorToken("'"),
+            new IdentifierToken("a"),
+        };
+        var result = sut.Parse(tokens);
+        var expectedList = CreateList(
+            new VariableExpression("quote"),
+            new VariableExpression("a")
+        );
+        CompareLists(result, expectedList);
+    }
 }

@@ -7,22 +7,22 @@ namespace SICP_Tests;
 
 public class TestBase
 {
-    protected ListExpression CreateList(params Expression[] expressions)
+    protected PairExpression CreateList(params Expression[] expressions)
     {
-        ListExpression list = EmptyListExpression.Instance;
+        PairExpression list = EmptyListExpression.Instance;
 
         foreach (var expression in expressions.Reverse())
         {
-            list = new ListExpression(expression, list);
+            list = new PairExpression(expression, list);
         }
 
         return list;
     }
 
-    protected bool CompareLists(Expression actual, ListExpression expected)
+    protected bool CompareLists(Expression actual, PairExpression expected)
     {
-        actual.Should().NotBeNull().And.BeAssignableTo<ListExpression>();
-        var actualList = (ListExpression)actual;
+        actual.Should().NotBeNull().And.BeAssignableTo<PairExpression>();
+        var actualList = (PairExpression)actual;
 
         if (expected == EmptyListExpression.Instance)
         {
@@ -38,7 +38,7 @@ public class TestBase
 
     protected bool CompareExpressions(Expression actual, Expression expected) => expected switch
     {
-        ListExpression le => CompareLists(actual, le),
+        PairExpression le => CompareLists(actual, le),
         BooleanExpression be1 => actual is BooleanExpression be2 && be1.Value == be2.Value,
         NumberExpression ne1 => actual is NumberExpression ne2 && ne1.Value == ne2.Value,
         VariableExpression ve1 => actual is VariableExpression ve2 && ve1.Value == ve2.Value,

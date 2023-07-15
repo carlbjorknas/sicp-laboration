@@ -1,6 +1,6 @@
 ﻿namespace SICP.Expressions;
 
-public class EmptyListExpression : ListExpression
+public class EmptyListExpression : PairExpression
 {
     private EmptyListExpression() : base(null, null)
     {

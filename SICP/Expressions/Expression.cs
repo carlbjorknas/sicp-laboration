@@ -5,7 +5,7 @@ public abstract class Expression
     public abstract override string ToString();
 
     public bool IsTaggedList(string tag)
-        => this is ListExpression le &&
+        => this is PairExpression le &&
         le.Car is VariableExpression ve &&
         ve.Value == tag;
 }

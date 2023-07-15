@@ -28,7 +28,7 @@ public class Evaluator
         else if (SpecialFormOr.Recognises(expression))
             return SpecialFormOr.Evaluate(expression, this, env);
 
-        else if (expression is ListExpression list)
+        else if (expression is PairExpression list)
         {
             var evaluatedOperator = Eval(Operator(list), env);
             var evaluatedOperands = EvalOperands(Operands(list), env).ToList();
@@ -41,15 +41,15 @@ public class Evaluator
     private bool IsSelfEvaluating(Expression expr)
         => expr is BooleanExpression or NumberExpression or EmptyListExpression;
 
-    static Expression Operator(ListExpression list) => list.Car;
-    static ListExpression Operands(ListExpression list) => (ListExpression)list.Cdr;
+    static Expression Operator(PairExpression list) => list.Car;
+    static PairExpression Operands(PairExpression list) => (PairExpression)list.Cdr;
 
-    public IEnumerable<Expression> EvalOperands(ListExpression list, Environment env)
+    public IEnumerable<Expression> EvalOperands(PairExpression list, Environment env)
     {
         while (list != EmptyListExpression.Instance)
         {
             yield return Eval(list.Car, env);
-            list = (ListExpression)list.Cdr;
+            list = (PairExpression)list.Cdr;
         }
     }
 
