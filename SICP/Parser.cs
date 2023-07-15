@@ -15,9 +15,9 @@ public class Parser
         return Parse();
     }
 
-    bool MoreTokensExists => _index < _tokens!.Length;
+    bool MoreTokensExists => _index < _tokens!.Length - 1;
     Token CurrentToken => _tokens![_index];
-    Token NextToken => _tokens![++_index];
+    Token GetNextToken() => _tokens![++_index];
 
     private Expression Parse()
     {
@@ -46,7 +46,7 @@ public class Parser
         if (!MoreTokensExists)
             throw new Exception("Expression is incorrectly ended.");
 
-        var token = NextToken;
+        var token = GetNextToken();
 
         if (token.IsEndingParen)
             return EmptyListExpression.Instance;
