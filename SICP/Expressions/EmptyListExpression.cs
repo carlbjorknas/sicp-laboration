@@ -9,4 +9,6 @@ public class EmptyListExpression : PairExpression
     public static EmptyListExpression Instance { get; } = new EmptyListExpression();
 
     public override string ToString() => "()";
+
+    public override PairExpression ShallowCopy() => this;
 }

@@ -446,4 +446,36 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("(2 0)"), Times.Once);
     }
+
+    [TestMethod]
+    public void Append_without_arguments_return_empty_list()
+    {
+        SetupInputSequence("(append)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("()"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Can_append_two_lists()
+    {
+        SetupInputSequence("(append '(a b) '(c d))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(a b c d)"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Append_handles_empty_list()
+    {
+        SetupInputSequence("(append '(a b) '() '(c d))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(a b c d)"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Append_can_create_dotted_pair()
+    {
+        SetupInputSequence("(append '(a b) 'c)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(a b . c)"), Times.Once);
+    }
 }

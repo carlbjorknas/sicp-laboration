@@ -3,7 +3,7 @@
 public class PairExpression : Expression
 {
     private readonly Expression? _left;
-    private readonly Expression? _right;
+    private Expression? _right;
 
     public PairExpression(Expression? left, Expression? right)
     {
@@ -60,5 +60,32 @@ public class PairExpression : Expression
             list = (PairExpression)list.Cdr;
         }
         return dotNetList;
+    }
+
+    public virtual PairExpression ShallowCopy()
+    {
+        var right = _right is PairExpression pe 
+            ? pe.ShallowCopy() 
+            : _right;
+        return new PairExpression(_left, right);
+    }
+
+    public PairExpression LastPair
+    {
+        get
+        {
+            var current = this;
+            while (current._right is PairExpression pe && pe != EmptyListExpression.Instance)
+            {
+                current = pe;
+            }
+
+            return current;
+         }
+    }
+
+    public void SetRight(Expression newRight)
+    {
+        _right = newRight;
     }
 }
