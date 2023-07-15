@@ -18,6 +18,7 @@ public class Environment
         AddVariable(">", new PrimitiveProcedureGt());
         AddVariable("eval", new PrimitiveProcedureEval());
         AddVariable("cons", new PrimitiveProcedureCons());
+        AddVariable("list", new PrimitiveProcedureList());
     }
 
     public void AddVariable(string name, Expression value)
