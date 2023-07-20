@@ -513,8 +513,24 @@ public class REPLTests : TestBase
     [TestMethod]
     public void Car_returns_the_first_object_in_a_list()
     {
-        SetupInputSequence("(car (list 1 2))");
+        SetupInputSequence("(car '(1 2))");
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("1"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Cdr_returns_the_rest_of_a_list()
+    {
+        SetupInputSequence("(cdr '(1 2))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(2)"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Can_car_a_list_returned_from_cdr()
+    {
+        SetupInputSequence("(car (cdr '(1 2)))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("2"), Times.Once);
     }
 }
