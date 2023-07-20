@@ -22,11 +22,18 @@ public class REPL
         var env = new Environment();
         var command = _reader.Read();
         while(command != string.Empty)
-        {            
-            var tokens = _lexer.Tokenize(command);
-            var expression = _parser.Parse(tokens);
-            var evaluatedExpression = _evaluator.Eval(expression, env);
-            _printer.Print(evaluatedExpression.ToString());
+        {
+            try
+            {
+                var tokens = _lexer.Tokenize(command);
+                var expression = _parser.Parse(tokens);
+                var evaluatedExpression = _evaluator.Eval(expression, env);
+                _printer.Print(evaluatedExpression.ToString());
+            }
+            catch (Exception ex)
+            {
+                _printer.Print(ex.Message);
+            }
 
             command = _reader.Read();
         }

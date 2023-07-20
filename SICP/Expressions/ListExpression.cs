@@ -84,7 +84,7 @@ public class PairExpression : Expression
          }
     }
 
-    public void SetRight(Expression newRight)
+    public virtual void SetRight(Expression newRight)
     {
         _right = newRight;
     }

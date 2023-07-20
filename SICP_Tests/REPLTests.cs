@@ -456,6 +456,14 @@ public class REPLTests : TestBase
     }
 
     [TestMethod]
+    public void Append_with_single_argument_returns_the_argument()
+    {
+        SetupInputSequence("(append 2)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("2"), Times.Once);
+    }
+
+    [TestMethod]
     public void Can_append_two_lists()
     {
         SetupInputSequence("(append '(a b) '(c d))");
@@ -464,9 +472,17 @@ public class REPLTests : TestBase
     }
 
     [TestMethod]
-    public void Append_handles_empty_list()
+    public void Append_handles_single_empty_list()
     {
         SetupInputSequence("(append '(a b) '() '(c d))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(a b c d)"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Append_handles_double_empty_list()
+    {
+        SetupInputSequence("(append '(a b) '() '() '(c d))");
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("(a b c d)"), Times.Once);
     }
@@ -479,8 +495,17 @@ public class REPLTests : TestBase
         _printerMock!.Verify(x => x.Print("(a b . c)"), Times.Once);
     }
 
-    // TODO Validate the arguments to Append. All but the last must be lists.
-    // How should the use of improper lists (dotted pairs) be handled?
+    [TestMethod]
+    public void Append_requires_all_but_the_last_argument_to_be_of_type_list()
+    {
+        SetupInputSequence("(append 1 2)");
+        _sut!.Run();
+        _printerMock!.Verify(
+            x => x.Print("The method 'append' requires all but the last argument to be of type 'list'."), 
+            Times.Once);
+    }
+
+    // TODO How should the use of improper lists (dotted pairs) be handled?
     // Throw exception or ignore the cdr of the dotted pair
     // (the online interpreter ignores "(append (cons 'a 'b) 'c) => (a.c)")
 }
