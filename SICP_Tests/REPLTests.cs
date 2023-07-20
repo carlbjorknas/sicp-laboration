@@ -188,11 +188,8 @@ public class REPLTests : TestBase
     public void When_using_an_unbound_variable_an_exception_is_thrown()
     {
         SetupInputSequence("x");
-
-        // TODO The exception should be catched and written to output instead.
-        _sut!.Invoking(x => x.Run())
-            .Should().Throw<UnboundVariableException>()
-            .WithMessage("Variable 'x' is unbound.");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("Variable 'x' is unbound."), Times.Once);
     }
 
     [TestMethod]

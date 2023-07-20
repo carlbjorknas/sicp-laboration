@@ -10,6 +10,9 @@ internal class PrimitiveProcedureAppend : PrimitiveProcedure
         var allButLastOperand = operands
             .Take(operands.Count - 1)
             .ToList();
+
+        if (!allButLastOperand.Any())
+            return operands.First();
         
         var operandsOfWrongType = allButLastOperand
             .Where(x => x is not PairExpression)
