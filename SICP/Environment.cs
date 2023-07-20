@@ -18,6 +18,7 @@ public class Environment
         AddVariable(">", new PrimitiveProcedureGt());
         AddVariable("eval", new PrimitiveProcedureEval());
         AddVariable("cons", new PrimitiveProcedureCons());
+        AddVariable("car", new PrimitiveProcedureCar());
         AddVariable("list", new PrimitiveProcedureList());
         AddVariable("append", new PrimitiveProcedureAppend());
     }

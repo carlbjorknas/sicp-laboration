@@ -509,4 +509,12 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("(a c)"), Times.Once);
     }
+
+    [TestMethod]
+    public void Car_returns_the_first_object_in_a_list()
+    {
+        SetupInputSequence("(car (list 1 2))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("1"), Times.Once);
+    }
 }
