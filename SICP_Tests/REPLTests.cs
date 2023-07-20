@@ -502,7 +502,11 @@ public class REPLTests : TestBase
             Times.Once);
     }
 
-    // TODO How should the use of improper lists (dotted pairs) be handled?
-    // Throw exception or ignore the cdr of the dotted pair
-    // (the online interpreter ignores "(append (cons 'a 'b) 'c) => (a.c)")
+    [TestMethod]
+    public void Append_ignores_the_cdr_of_a_dotted_pair()
+    {
+        SetupInputSequence("(append (cons 'a 'b) '(c))");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("(a c)"), Times.Once);
+    }
 }
