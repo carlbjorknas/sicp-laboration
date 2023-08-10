@@ -3,6 +3,7 @@
 public abstract class PrimitiveProcedure : Expression
 {
     public abstract Expression Apply(List<Expression> operands, Environment env);
+
     public override string ToString() => "PrimitiveProcedure";
 
     protected void EnsureOperandsHaveExpectedCount(List<Expression> operands, int expectedCount, string opName)

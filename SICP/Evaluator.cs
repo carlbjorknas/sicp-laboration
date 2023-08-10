@@ -28,6 +28,9 @@ public class Evaluator
         else if (SpecialFormOr.Recognises(expression))
             return SpecialFormOr.Evaluate(expression, this, env);
 
+        else if (SpecialFormLambda.Recognises(expression))
+            return SpecialFormLambda.MakeProcedure(expression, env);
+
         else if (expression is PairExpression list)
         {
             var evaluatedOperator = Eval(Operator(list), env);
