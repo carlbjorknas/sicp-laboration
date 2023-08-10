@@ -2,7 +2,7 @@
 
 public class PrimitiveProcedureMinus : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands, Environment env)
+    public override Expression Apply(List<Expression> operands)
     {
         // TODO Handle operands that are not numbers.
 

@@ -2,7 +2,7 @@
 
 public abstract class PrimitiveProcedure : Expression
 {
-    public abstract Expression Apply(List<Expression> operands, Environment env);
+    public abstract Expression Apply(List<Expression> operands);
 
     public override string ToString() => "PrimitiveProcedure";
 

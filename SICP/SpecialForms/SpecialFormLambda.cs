@@ -14,6 +14,6 @@ internal static class SpecialFormLambda
     public static Expression MakeProcedure(Expression expression, Environment env)
     {
         var list = (PairExpression)expression;
-        return new CompoundProcedure(Parameters(list), Body(list));
+        return new CompoundProcedure(Parameters(list), Body(list), env);
     }
 }

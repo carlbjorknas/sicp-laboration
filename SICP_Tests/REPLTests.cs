@@ -565,4 +565,12 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("(lambda (x) (* x x))"), Times.Once);
     }
+
+    [TestMethod]
+    public void Can_apply_a_lambda()
+    {
+        SetupInputSequence("((lambda (x) (* x x)) 2)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("4"), Times.Once);
+    }
 }

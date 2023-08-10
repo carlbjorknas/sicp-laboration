@@ -6,8 +6,9 @@ namespace SICP;
 public class Environment
 {
     private readonly Dictionary<string, Expression> _varToValueMap = new();
+    private readonly Environment? _enclosingEnvironment;
 
-    public Environment()
+    public Environment() : this(null)
     {
         AddVariable("+", new PrimitiveProcedurePlus());
         AddVariable("-", new PrimitiveProcedureMinus());
@@ -25,6 +26,11 @@ public class Environment
         AddVariable("append", new PrimitiveProcedureAppend());
     }
 
+    public Environment(Environment? enclosingEnvironment)
+    {
+        _enclosingEnvironment = enclosingEnvironment;
+    }
+
     public void AddVariable(string name, Expression value)
     {
         _varToValueMap.Add(name, value);
@@ -36,5 +42,22 @@ public class Environment
             return value;
 
         throw new UnboundVariableException(name);
+    }
+
+    internal Environment ExtendWith(List<string> parameters, List<Expression> arguments)
+    {
+        if (arguments.Count < parameters.Count)
+            throw new InvalidNumberOfArgumentsException("Too few arguments supplied.", parameters, arguments);
+        if (arguments.Count > parameters.Count)
+            throw new InvalidNumberOfArgumentsException("Too many arguments supplied.", parameters, arguments);
+
+        var extendedEnvironment = new Environment(enclosingEnvironment: this);
+
+        for (var i = 0 ; i < parameters.Count; i++)
+        {
+            extendedEnvironment.AddVariable(parameters[i], arguments[i]);
+        }
+
+        return extendedEnvironment;
     }
 }

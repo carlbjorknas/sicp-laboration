@@ -2,7 +2,7 @@
 
 internal class PrimitiveProcedureList : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands, Environment env)
+    public override Expression Apply(List<Expression> operands)
     {
         PairExpression pair = EmptyListExpression.Instance;
 
