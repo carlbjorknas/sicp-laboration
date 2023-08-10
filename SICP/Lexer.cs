@@ -34,12 +34,12 @@ public class Lexer
             }
             // A little bit of cheating here, a variable name can't start with "+" or "-",
             // but it should be able to have it in its name after the first char, but I ignore that for now.
-            else if (tokenText == "+" || tokenText == "-" || tokenText.BeginsWithValidVariableChar())
+            else if (tokenText == "+" || tokenText == "-" || tokenText == "*" || tokenText.BeginsWithValidVariableChar())
             {
                 tokens.Add(new IdentifierToken(tokenText));
             }
             else
-                throw new Exception($"Cannot tokenize '{text}'.");
+                throw new Exception($"Cannot tokenize '{tokenText}' followed by '{text}'.");
         }
 
         return tokens.ToArray();

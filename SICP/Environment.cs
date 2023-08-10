@@ -11,6 +11,7 @@ public class Environment
     {
         AddVariable("+", new PrimitiveProcedurePlus());
         AddVariable("-", new PrimitiveProcedureMinus());
+        AddVariable("*", new PrimitiveProcedureMultiplication());
         AddVariable("not", new PrimitiveProcedureNot());
         AddVariable("<", new PrimitiveProcedureLt());
         AddVariable("<=", new PrimitiveProcedureLte());
