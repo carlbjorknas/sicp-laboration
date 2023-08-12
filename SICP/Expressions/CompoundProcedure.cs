@@ -15,7 +15,7 @@ internal class CompoundProcedure : Expression
 
     public Expression Apply(List<Expression> arguments)
     {
-        var extendedEnvironment = _environment.ExtendWith(_parameters, arguments);
+        var extendedEnvironment = new Environment(_parameters, arguments, enclosingEnvironment: _environment);
         return new Evaluator().Eval(_body, extendedEnvironment);
     }
 

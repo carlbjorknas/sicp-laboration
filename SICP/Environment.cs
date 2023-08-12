@@ -8,7 +8,7 @@ public class Environment
     private readonly Dictionary<string, Expression> _varToValueMap = new();
     private readonly Environment? _enclosingEnvironment;
 
-    public Environment() : this(null)
+    public Environment()
     {
         AddVariable("+", new PrimitiveProcedurePlus());
         AddVariable("-", new PrimitiveProcedureMinus());
@@ -26,9 +26,19 @@ public class Environment
         AddVariable("append", new PrimitiveProcedureAppend());
     }
 
-    public Environment(Environment? enclosingEnvironment)
+    public Environment(List<string> parameters, List<Expression> arguments, Environment enclosingEnvironment)
     {
         _enclosingEnvironment = enclosingEnvironment;
+
+        if (arguments.Count < parameters.Count)
+            throw new InvalidNumberOfArgumentsException("Too few arguments supplied.", parameters, arguments);
+        if (arguments.Count > parameters.Count)
+            throw new InvalidNumberOfArgumentsException("Too many arguments supplied.", parameters, arguments);
+
+        for (var i = 0; i < parameters.Count; i++)
+        {
+            AddVariable(parameters[i], arguments[i]);
+        }
     }
 
     public void AddVariable(string name, Expression value)
@@ -41,23 +51,8 @@ public class Environment
         if (_varToValueMap.TryGetValue(name, out var value))
             return value;
 
-        throw new UnboundVariableException(name);
-    }
-
-    internal Environment ExtendWith(List<string> parameters, List<Expression> arguments)
-    {
-        if (arguments.Count < parameters.Count)
-            throw new InvalidNumberOfArgumentsException("Too few arguments supplied.", parameters, arguments);
-        if (arguments.Count > parameters.Count)
-            throw new InvalidNumberOfArgumentsException("Too many arguments supplied.", parameters, arguments);
-
-        var extendedEnvironment = new Environment(enclosingEnvironment: this);
-
-        for (var i = 0 ; i < parameters.Count; i++)
-        {
-            extendedEnvironment.AddVariable(parameters[i], arguments[i]);
-        }
-
-        return extendedEnvironment;
+        return _enclosingEnvironment != null 
+            ? _enclosingEnvironment.GetValue(name)
+            : throw new UnboundVariableException(name);
     }
 }
