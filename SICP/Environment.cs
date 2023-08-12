@@ -16,6 +16,7 @@ public class Environment
         AddVariable("not", new PrimitiveProcedureNot());
         AddVariable("<", new PrimitiveProcedureLt());
         AddVariable("<=", new PrimitiveProcedureLte());
+        AddVariable("=", new PrimitiveProcedureEquals());
         AddVariable(">=", new PrimitiveProcedureGte());
         AddVariable(">", new PrimitiveProcedureGt());
         AddVariable("eval", new PrimitiveProcedureEval());

@@ -34,7 +34,7 @@ public class Lexer
             }
             // A little bit of cheating here, a variable name can't start with "+" or "-",
             // but it should be able to have it in its name after the first char, but I ignore that for now.
-            else if (tokenText == "+" || tokenText == "-" || tokenText == "*" || tokenText.BeginsWithValidVariableChar())
+            else if (tokenText == "+" || tokenText == "-" || tokenText.BeginsWithValidVariableChar())
             {
                 tokens.Add(new IdentifierToken(tokenText));
             }
@@ -62,7 +62,7 @@ internal static class StringExtensions
         => Regex.IsMatch(text[..1], "[0-9]");
 
     public static bool BeginsWithValidVariableChar(this string text)
-        => Regex.IsMatch(text[..1], "[a-z><]", RegexOptions.IgnoreCase);
+        => Regex.IsMatch(text[..1], "[a-z><*=]", RegexOptions.IgnoreCase);
 
     public static string TakeUntilNextPunctuation(this string text)
     {

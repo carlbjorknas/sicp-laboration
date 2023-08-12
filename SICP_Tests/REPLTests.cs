@@ -1,9 +1,6 @@
-﻿using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Newtonsoft.Json.Linq;
 using SICP;
-using SICP.Exceptions;
 using SICP.Expressions;
 using System.Linq;
 
@@ -355,23 +352,26 @@ public class REPLTests : TestBase
     }
 
     [TestMethod]
-    [DataRow("<", "1", "1", "false")]
-    [DataRow("<", "2", "1", "false")]
-    [DataRow("<", "1", "2", "true")]
-    [DataRow("<=", "1", "1", "true")]
-    [DataRow("<=", "2", "1", "false")]
-    [DataRow("<=", "1", "2", "true")]
-    [DataRow(">=", "1", "1", "true")]
-    [DataRow(">=", "1", "2", "false")]
-    [DataRow(">=", "2", "1", "true")]
-    [DataRow(">", "1", "1", "false")]
-    [DataRow(">", "1", "2", "false")]
-    [DataRow(">", "2", "1", "true")]
-    public void Can_do_arithmetic_comparisons(string op, string arg1, string arg2, string expectedResult)
+    [DataRow("<",  1, 1, false)]
+    [DataRow("<",  2, 1, false)]
+    [DataRow("<",  1, 2, true)]
+    [DataRow("<=", 1, 1, true)]
+    [DataRow("<=", 2, 1, false)]
+    [DataRow("<=", 1, 2, true)]
+    [DataRow("=",  1, 1, true)]
+    [DataRow("=",  1, 2, false)]
+    [DataRow("=",  2, 1, false)]
+    [DataRow(">=", 1, 1, true)]
+    [DataRow(">=", 1, 2, false)]
+    [DataRow(">=", 2, 1, true)]
+    [DataRow(">",  1, 1, false)]
+    [DataRow(">",  1, 2, false)]
+    [DataRow(">",  2, 1, true)]
+    public void Can_do_arithmetic_comparisons(string op, int arg1, int arg2, bool expectedResult)
     {
         SetupInputSequence($"({op} {arg1} {arg2})");
         _sut!.Run();
-        _printerMock!.Verify(x => x.Print(expectedResult), Times.Once);
+        _printerMock!.Verify(x => x.Print(expectedResult.ToString().ToLower()), Times.Once);
     }
 
     [TestMethod]
@@ -586,4 +586,16 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("4"), Times.Once);
     }
+
+    [TestMethod]
+    public void Can_use_recursion()
+    {
+        // Use recursion to calculate 5! = 1 * 2 * 3 * 4 * 5
+        SetupInputSequence(
+            // TODO Make it possible to enter the program with line breaks and tabs.
+            "(define (factorial n) (if (= n 1) 1 (* n (factorial (- n 1)))))",
+            "(factorial 5)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("120"), Times.Once);
+    }    
 }
