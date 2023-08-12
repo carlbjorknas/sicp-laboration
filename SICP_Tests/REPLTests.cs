@@ -588,7 +588,7 @@ public class REPLTests : TestBase
     }
 
     [TestMethod]
-    public void Can_use_recursion()
+    public void Can_calculate_factorial_using_a_linear_recursive_process()
     {
         // Use recursion to calculate 5! = 1 * 2 * 3 * 4 * 5
         SetupInputSequence(
