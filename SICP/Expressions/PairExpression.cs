@@ -16,6 +16,8 @@ public class PairExpression : Expression
     public Expression Car => _left ?? throw new Exception("Cannot 'Car' the empty list.");
     public Expression Cdr => _right ?? throw new Exception("Cannot 'Cdr' the empty list.");
     public Expression Cadr => ((PairExpression)Cdr).Car;
+    public Expression Caadr => ((PairExpression)Cadr).Car;
+    public Expression Cdadr => ((PairExpression)Cadr).Cdr;
     public Expression Cddr => ((PairExpression)Cdr).Cdr;
     public Expression Caddr => ((PairExpression)Cddr).Car;
     public Expression Cdddr => ((PairExpression)Cddr).Cdr;

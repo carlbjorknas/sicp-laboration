@@ -217,6 +217,19 @@ public class REPLTests : TestBase
     }
 
     [TestMethod]
+    public void Can_define_a_procedure_using_standard_procedure_definition()
+    {
+        SetupInputSequence(
+            "(define (square x) (* x x))",
+            "square");
+
+        var env = _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("ok"), Times.Once);
+        _printerMock!.Verify(x => x.Print("(lambda (x) (* x x))"), Times.Once);
+    }
+
+    [TestMethod]
     public void An_if_expression_with_a_true_predicate_returns_its_consequent()
     {
         SetupInputSequence("(if true 1 2)");
