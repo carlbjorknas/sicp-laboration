@@ -1,4 +1,19 @@
-Should probably break out a lexer and a parser from the evaluator
+# Things to do
+- Add support for strings
+- Move logic from lexer to parser to be able to use fewer types of tokens,
+i e bool values could be like any value from the lexer and get typed in the parser.
+- Add support for splitting an expression on multiple rows.
+- Tail recursion optimization?
+- Add support for "begin"
+- Add support for "set!"
+- Add support for "cond" (what's the difference between "cond" and "if" really? With cond it's possible to "do many if:s at once".)
+- Add support for integers with unlimited size (because Lisp doesn't have a limit?)
+- Add support for decimals.
+- Group related tests and move to separate files.
+- Add support for macros.
+
+# Useful links
+
 https://amirkamil.github.io/project-scheme-parser/
 https://amirkamil.github.io/project-scheme-parser/#token-representation
 

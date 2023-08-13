@@ -592,7 +592,6 @@ public class REPLTests : TestBase
     {
         // Use recursion to calculate 5! = 1 * 2 * 3 * 4 * 5
         SetupInputSequence(
-            // TODO Make it possible to enter the program with line breaks and tabs.
             "(define (factorial n) (if (= n 1) 1 (* n (factorial (- n 1)))))",
             "(factorial 5)");
         _sut!.Run();
