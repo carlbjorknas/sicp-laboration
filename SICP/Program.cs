@@ -2,15 +2,14 @@
 using SICP;
 
 Console.WriteLine("Start coding!");
-Console.WriteLine("Quit by entering an empty line.");
+Console.WriteLine("Quit by entering the command '(quit)'.");
 
-var repl = new REPL(new Reader(), new Printer(), new Lexer(), new Parser(), new Evaluator());
+var reader = new Reader();
+var lexer = new Lexer(reader);
+var parser = new Parser(lexer);
+
+var repl = new REPL(new Printer(), parser, new Evaluator());
 repl.Run();
-
-class Reader : IReader
-{
-    public string Read() => Console.ReadLine()!;
-}
 
 class Printer : IPrinter
 {

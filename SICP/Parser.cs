@@ -4,24 +4,25 @@ namespace SICP;
 
 public class Parser
 {
+    private readonly Lexer _lexer;
 
-    Token[]? _tokens;
-    int _index = 0;
-
-    public Expression Parse(Token[] tokens)
+    public Parser(Lexer lexer)
     {
-        _tokens = tokens;
-        _index = 0;
+        _lexer = lexer;
+    }
+
+    public Expression GetNextExpression()
+    {
+        GetNextToken();
         return Parse();
     }
 
-    bool MoreTokensExists => _index < _tokens!.Length - 1;
-    Token CurrentToken => _tokens![_index];
-    Token GetNextToken() => _tokens![++_index];
+    Token? CurrentToken { get; set; }
+    Token GetNextToken() => CurrentToken = _lexer.GetNextToken();
 
     private Expression Parse()
     {
-        if (CurrentToken.IsStartingParen)
+        if (CurrentToken!.IsStartingParen)
         {
             return CreateList();
         }
@@ -45,14 +46,11 @@ public class Parser
             return new VariableExpression(it.Value);
         }
 
-        throw new Exception($"Could not parse the token array [{string.Join(", ", _tokens!.Select(x => x.ToString()))}]");
+        throw new Exception($"Could not parse the token {CurrentToken}");
     }
 
     private PairExpression CreateList()
     {
-        if (!MoreTokensExists)
-            throw new Exception("Expression is incorrectly ended.");
-
         var token = GetNextToken();
 
         if (token.IsEndingParen)

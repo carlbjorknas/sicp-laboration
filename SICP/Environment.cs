@@ -25,6 +25,7 @@ public class Environment
         AddVariable("cdr", new PrimitiveProcedureCdr());
         AddVariable("list", new PrimitiveProcedureList());
         AddVariable("append", new PrimitiveProcedureAppend());
+        AddVariable("quit", new PrimitiveProcedureQuit());
     }
 
     public Environment(List<string> parameters, List<Expression> arguments, Environment enclosingEnvironment)

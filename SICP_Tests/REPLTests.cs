@@ -18,24 +18,24 @@ public class REPLTests : TestBase
     {
         _readerMock = new Mock<IReader>();
         _printerMock = new Mock<IPrinter>();
-        var lexer = new Lexer();
-        var parser = new Parser();
+        var lexer = new Lexer(_readerMock.Object);
+        var parser = new Parser(lexer);
         var evaluator = new Evaluator();
-        _sut = new REPL(_readerMock.Object, _printerMock.Object, lexer, parser, evaluator);
+        _sut = new REPL(_printerMock.Object, parser, evaluator);
     }
 
     private void SetupInputSequence(params string[] inputs)
     {
         var sequence = _readerMock!.SetupSequence(x => x.Read());
-        inputs.Append("")
+        inputs.Append("(quit)")
             .ToList()            
             .ForEach(x => sequence = sequence.Returns(x));
     }
 
     [TestMethod]
-    public void When_empty_string_is_entered_the_repl_ends()
+    public void When_quit_is_called_the_repl_ends()
     {
-        _readerMock!.Setup(x => x.Read()).Returns("");
+        _readerMock!.Setup(x => x.Read()).Returns("(quit)");
         _sut!.Run();
         _readerMock.Verify(x => x.Read(), Times.Once);
     }
@@ -596,5 +596,20 @@ public class REPLTests : TestBase
             "(factorial 5)");
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("120"), Times.Once);
-    }    
+    }
+
+    [TestMethod]
+    public void Evaluation_is_not_made_until_the_expression_is_complete()
+    {
+        SetupInputSequence(
+            "(define (factorial n)           ",
+            "   (if (= n 1)                  ",
+            "       1                        ",
+            "       (* n (factorial (- n 1)))",
+            "   )                            ",
+            ")                               ",
+            "(factorial 5)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("120"), Times.Once);
+    }
 }

@@ -4,7 +4,30 @@ namespace SICP;
 
 public class Lexer
 {
-    public Token[] Tokenize(string text)
+    private readonly IReader _reader;
+    private readonly Queue<Token> _tokens = new();
+
+    public Lexer(IReader reader)
+    {
+        _reader = reader;
+    }
+
+    public Token? GetNextToken()
+    {
+        if (!_tokens.Any())
+        {
+            var input = _reader.Read();
+            if (input != null)
+                Tokenize(input).ToList().ForEach(_tokens.Enqueue);
+        }
+
+        if (_tokens.Any())
+            return _tokens.Dequeue();
+
+        return null;
+    }
+
+    private Token[] Tokenize(string text)
     {
         var tokens = new List<Token>();
         while (text.Length > 0)

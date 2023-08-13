@@ -1,18 +1,16 @@
-﻿namespace SICP;
+﻿using SICP.Exceptions;
+
+namespace SICP;
 
 public class REPL
 {
-    private readonly IReader _reader;
     private readonly IPrinter _printer;
-    private readonly Lexer _lexer;
     private readonly Parser _parser;
     private readonly Evaluator _evaluator;
 
-    public REPL(IReader reader, IPrinter printer, Lexer lexer, Parser parser, Evaluator evaluator)
+    public REPL(IPrinter printer, Parser parser, Evaluator evaluator)
     {
-        _reader = reader;
         _printer = printer;
-        _lexer = lexer;
         _parser = parser;
         _evaluator = evaluator;
     }
@@ -20,25 +18,23 @@ public class REPL
     public Environment Run()
     {
         var env = new Environment();
-        var command = _reader.Read();
-        while(command != string.Empty)
+        while(true)
         {
             try
             {
-                var tokens = _lexer.Tokenize(command);
-                var expression = _parser.Parse(tokens);
+                var expression = _parser.GetNextExpression();
                 var evaluatedExpression = _evaluator.Eval(expression, env);
                 _printer.Print(evaluatedExpression.ToString());
+            }
+            catch (QuitException)
+            {
+                return env;
             }
             catch (Exception ex)
             {
                 _printer.Print(ex.Message);
             }
-
-            command = _reader.Read();
         }
-
-        return env;
     }
 }
 
