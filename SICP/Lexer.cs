@@ -12,19 +12,15 @@ public class Lexer
         _reader = reader;
     }
 
-    public Token? GetNextToken()
+    public Token GetNextToken()
     {
-        if (!_tokens.Any())
+        while (!_tokens.Any())
         {
             var input = _reader.Read();
-            if (input != null)
-                Tokenize(input).ToList().ForEach(_tokens.Enqueue);
+            Tokenize(input).ToList().ForEach(_tokens.Enqueue);
         }
 
-        if (_tokens.Any())
-            return _tokens.Dequeue();
-
-        return null;
+        return _tokens.Dequeue();
     }
 
     private Token[] Tokenize(string text)
@@ -32,7 +28,7 @@ public class Lexer
         var tokens = new List<Token>();
         while (text.Length > 0)
         {
-            if (text.StartsWith(" "))
+            if (string.IsNullOrWhiteSpace(text[..1]))
             {
                 text = text[1..];
                 continue;

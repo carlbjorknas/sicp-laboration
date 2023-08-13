@@ -5,13 +5,6 @@ class Reader : IReader
 {
     public string Read()
     {
-        while (true)
-        {
-            var value = Console.ReadLine()!;
-            if (value == null)
-                Thread.Sleep(100);
-            else
-                return value;
-        }
+        return Console.ReadLine()!;
     }
 }

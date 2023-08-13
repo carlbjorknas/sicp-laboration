@@ -11,9 +11,4 @@ var parser = new Parser(lexer);
 var repl = new REPL(new Printer(), parser, new Evaluator());
 repl.Run();
 
-class Printer : IPrinter
-{
-    public void Print(string text) => Console.WriteLine(text);
-}
-
 

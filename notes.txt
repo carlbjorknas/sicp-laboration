@@ -20,3 +20,13 @@ https://conservatory.scheme.org/schemers/Documents/Standards/R5RS/HTML/r5rs-Z-H-
 
 Online interpreter
 https://inst.eecs.berkeley.edu/~cs61a/fa14/assets/interpreter/scheme.html
+
+
+# Examples
+(define (factorial n)           
+   (if (= n 1)                  
+       1                        
+       (* n (factorial (- n 1)))
+   )                            
+)                               
+(factorial 5)

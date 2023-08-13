@@ -612,4 +612,20 @@ public class REPLTests : TestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("120"), Times.Once);
     }
+
+    [TestMethod]
+    public void Can_handle_input_rows_with_whitespace_only()
+    {
+        SetupInputSequence(
+            "(define",
+            "",
+            " ",
+            "\t",
+            "x",
+            "10",
+            ")");
+
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("ok"), Times.Once);
+    }
 }
