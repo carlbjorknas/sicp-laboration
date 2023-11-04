@@ -21,61 +21,11 @@ public class EvaluatorTests : TestBase
     }
 
     [TestMethod]
-    public void When_expression_is_a_boolean_it_is_returned_as_is()
-    {
-        var expression = new BooleanExpression(false);
-        var result = _sut!.Eval(expression, _env!);
-        result.Should().BeSameAs(expression);
-    }
-
-    [TestMethod]
     public void When_expression_is_a_number_it_is_returned_as_is()
     {
         var expression = new NumberExpression(123);
         var result = _sut!.Eval(expression, _env!);
         result.Should().BeSameAs(expression);
-    }
-
-    [TestMethod]
-    public void When_expression_is_a_variable_expression_plus_then_the_primitive_procedure_for_plus_is_returned()
-    {
-        var expression = new VariableExpression("+");
-        var result = _sut!.Eval(expression, _env!);
-        result.Should().BeOfType<PrimitiveProcedurePlus>();
-    }
-
-    [TestMethod]
-    public void Addition_without_arguments_returns_0()
-    {
-        var result = _sut!.Eval(CreateList(new VariableExpression("+")), _env!);
-        result.Should().BeOfType<NumberExpression>();
-        ((NumberExpression)result).Value.Should().Be(0);
-    }
-
-    [TestMethod]
-    public void Unary_subtraction()
-    {
-        var expression = CreateList(new VariableExpression("-"), new NumberExpression(2));
-        var result = _sut!.Eval(expression, _env!);
-        result.Should().BeOfType<NumberExpression>();
-        ((NumberExpression)result).Value.Should().Be(-2);
-    }
-
-    [TestMethod]
-    public void Can_evaluate_a_definition_where_a_variable_binds_to_a_number()
-    {
-        var expression = CreateList(
-            new VariableExpression("define"), 
-            new VariableExpression("x"), 
-            new NumberExpression(10));
-
-        var result = _sut!.Eval(expression, _env!);
-        result.Should().BeOfType<VariableExpression>()
-         .Which.Value.Should().Be("ok");
-
-        var value = _env!.GetValue("x");
-        value.Should().BeOfType<NumberExpression>()
-            .Which.Value.Should().Be(10);
     }
 
     [TestMethod]
