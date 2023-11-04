@@ -25,6 +25,8 @@ public class Environment
         AddVariable("cdr", new PrimitiveProcedureCdr());
         AddVariable("list", new PrimitiveProcedureList());
         AddVariable("append", new PrimitiveProcedureAppend());
+        AddVariable("string?", new PrimitiveProcedureStringTest());
+        AddVariable(PrimitiveProcedureStringLength.Name, new PrimitiveProcedureStringLength());
         AddVariable("quit", new PrimitiveProcedureQuit());
     }
 

@@ -27,7 +27,7 @@ public class StringTests : EndToEndTestBase
     {
         SetupInputSequence("\"The \\\"fresh\\\" bread was all dried up.\"");
         _sut!.Run();
-        _printerMock!.Verify(x => x.Print("\"The \\\"fresh\\\" bread was all dried up.\""), Times.Once);
+        _printerMock!.Verify(x => x.Print("\"The \"fresh\" bread was all dried up.\""), Times.Once);
     }
 
     [TestMethod]
@@ -35,6 +35,34 @@ public class StringTests : EndToEndTestBase
     {
         SetupInputSequence("\"c:\\\\temp\\\\readme.txt\"");
         _sut!.Run();
-        _printerMock!.Verify(x => x.Print("\"c:\\\\temp\\\\readme.txt\""), Times.Once);
+        _printerMock!.Verify(x => x.Print("\"c:\\temp\\readme.txt\""), Times.Once);
+    }
+
+    [TestMethod]
+    public void The_string_test_method_returns_true_for_a_string()
+    {
+        SetupInputSequence("(string? \"a_string\")");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("true"), Times.Once);
+    }
+
+    [TestMethod]
+    public void The_string_test_method_returns_false_for_a_boolean()
+    {
+        SetupInputSequence("(string? true)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("false"), Times.Once);
+    }
+
+    [TestMethod]
+    [DataRow("\"\"", 0)]
+    [DataRow("\" \"", 1)]
+    [DataRow("\"\t\"", 1)]
+    [DataRow("\"a string having length \\\"27\\\"\"", 27)]
+    public void Can_get_length_of_a_string(string value, int expectedLength)
+    {
+        SetupInputSequence($"(string-length {value})");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print($"{expectedLength}"), Times.Once);
     }
 }

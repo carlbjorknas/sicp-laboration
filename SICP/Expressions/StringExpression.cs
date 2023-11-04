@@ -7,14 +7,7 @@ internal class StringExpression : Expression
         Value = value;
     }
 
-    public string Value { get; }
+    public string Value { get; }    
 
-    public override string ToString()
-    {
-        var escapedString = Value
-            .Replace("\\", "\\\\")
-            .Replace("\"", "\\\"");
-
-         return $"\"{escapedString}\"";
-    }
+    public override string ToString() => $"\"{Value}\"";
 }
