@@ -9,5 +9,12 @@ internal class StringExpression : Expression
 
     public string Value { get; }
 
-    public override string ToString() => $"\"{Value}\"";
+    public override string ToString()
+    {
+        var escapedString = Value
+            .Replace("\\", "\\\\")
+            .Replace("\"", "\\\"");
+
+         return $"\"{escapedString}\"";
+    }
 }

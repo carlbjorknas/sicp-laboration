@@ -72,15 +72,21 @@ public class Lexer
 
     private static string GetStringToken(ref string text)
     {
+        var stringValue = "";
         for (var i = 1; i < text.Length; i++)
         {
-            if (text[i] == '"')
+            if (text[i] == '\\')
             {
-                var stringValue = text[1..i];
-                text = text[(i + 1)..];
+                i++;
+            }
+            else if (text[i] == '"')
+            {
+                 text = text[(i + 1)..];
                 return stringValue;
             }
+            stringValue += text[i];
         }
+
         throw new Exception($"Invalid string in '{text}'.");
     }
 
