@@ -5,7 +5,7 @@ using SICP.Expressions;
 namespace SICP_Tests.EndToEndTests;
 
 [TestClass]
-internal class DefineTests : EndToEndTestBase
+public class DefineTests : EndToEndTestBase
 {
     [TestMethod]
     public void Can_define_a_variable_and_bind_it_to_a_number()
@@ -16,6 +16,18 @@ internal class DefineTests : EndToEndTestBase
 
         _printerMock!.Verify(x => x.Print("ok"), Times.Once);
         var value = env.GetValue("x");
+        CompareExpressions(value, new NumberExpression(10));
+    }
+
+    [TestMethod]
+    public void A_variable_can_contain_letters_digits_hyphens_and_exclamation_mark()
+    {
+        SetupInputSequence("(define xyz123-! 10)");
+
+        var env = _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("ok"), Times.Once);
+        var value = env.GetValue("xyz123-!");
         CompareExpressions(value, new NumberExpression(10));
     }
 
@@ -42,6 +54,19 @@ internal class DefineTests : EndToEndTestBase
 
         _printerMock!.Verify(x => x.Print("ok"), Times.Once);
         _printerMock!.Verify(x => x.Print("5"), Times.Once);
+    }
+
+    [TestMethod]
+    public void Can_use_a_variable_in_an_add_expression()
+    {
+        SetupInputSequence(
+            "(define x (+ 2 3))",
+            "(+ 1 x)");
+
+        var env = _sut!.Run();
+
+        _printerMock!.Verify(x => x.Print("ok"), Times.Once);
+        _printerMock!.Verify(x => x.Print("6"), Times.Once);
     }
 
     [TestMethod]
