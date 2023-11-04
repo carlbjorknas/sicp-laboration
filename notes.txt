@@ -1,5 +1,5 @@
 # Things to do
-- Add support for strings
+- Add string manipulation functions
 - Tail recursion optimization?
 - Add support for "begin"
 - Add support for "set!"

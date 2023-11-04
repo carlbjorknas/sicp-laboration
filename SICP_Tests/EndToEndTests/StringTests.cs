@@ -29,4 +29,12 @@ public class StringTests : EndToEndTestBase
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("\"The \\\"fresh\\\" bread was all dried up.\""), Times.Once);
     }
+
+    [TestMethod]
+    public void A_string_can_contain_escaped_backslash()
+    {
+        SetupInputSequence("\"c:\\\\temp\\\\readme.txt\"");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("\"c:\\\\temp\\\\readme.txt\""), Times.Once);
+    }
 }
