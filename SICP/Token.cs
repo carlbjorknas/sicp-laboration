@@ -61,4 +61,17 @@
 
         public override string ToString() => $"{GetType()} {Value}";
     }
+
+    public class StringToken : Token
+    {
+        public StringToken(string value)
+        {
+            Value = value;
+        }
+
+        public string Value { get; }
+
+        public override string ToString() => $"{GetType()} {Value}";
+
+    }
 }

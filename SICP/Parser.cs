@@ -45,6 +45,10 @@ public class Parser
         {
             return new VariableExpression(it.Value);
         }
+        if (CurrentToken is StringToken st)
+        {
+            return new StringExpression(st.Value);
+        }
 
         throw new Exception($"Could not parse the token {CurrentToken}");
     }

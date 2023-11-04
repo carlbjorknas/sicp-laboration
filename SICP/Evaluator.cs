@@ -41,8 +41,11 @@ public class Evaluator
         throw new Exception($"Can not evaluate the expression '{expression}'");
     }
 
-    private bool IsSelfEvaluating(Expression expr)
-        => expr is BooleanExpression or NumberExpression or EmptyListExpression;
+    private static bool IsSelfEvaluating(Expression expr)
+        => expr is BooleanExpression
+        or NumberExpression
+        or EmptyListExpression
+        or StringExpression;
 
     static Expression Operator(PairExpression list) => list.Car;
     static PairExpression Operands(PairExpression list) => (PairExpression)list.Cdr;

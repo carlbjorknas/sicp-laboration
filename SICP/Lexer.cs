@@ -39,6 +39,12 @@ public class Lexer
                 text = text[1..];
                 continue;
             }
+            if (text.StartsWith('"'))
+            {
+                var stringValue = GetStringToken(ref text);
+                tokens.Add(new StringToken(stringValue));
+                continue;
+            }
 
             var tokenText = text.TakeUntilNextPunctuation();
             text = text[tokenText.Length..];
@@ -62,6 +68,20 @@ public class Lexer
         }
 
         return tokens.ToArray();
+    }
+
+    private static string GetStringToken(ref string text)
+    {
+        for (var i = 1; i < text.Length; i++)
+        {
+            if (text[i] == '"')
+            {
+                var stringValue = text[1..i];
+                text = text[(i + 1)..];
+                return stringValue;
+            }
+        }
+        throw new Exception($"Invalid string in '{text}'.");
     }
 
     private NumberToken GetNumberToken(string tokenText)

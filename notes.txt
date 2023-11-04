@@ -6,7 +6,6 @@
 - Add support for "cond" (what's the difference between "cond" and "if" really? With cond it's possible to "do many if:s at once".)
 - Add support for integers with unlimited size (because Lisp doesn't have a limit?)
 - Add support for decimals.
-- Group related tests and move to separate files.
 - Add support for macros.
 
 # Useful links
