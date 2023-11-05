@@ -52,7 +52,7 @@ public class PairExpression : Expression
         return str;
     }
 
-    public List<Expression> AsFlatDotNetList()
+    public List<Expression> ToDotNetList()
     {
         var list = this;
         var dotNetList = new List<Expression>();

@@ -8,7 +8,7 @@ internal static class SpecialFormAnd
     public static Expression Evaluate(Expression andExpression, Evaluator evaluator, Environment env)
     {
         var list = (PairExpression)andExpression;
-        var dotNetlist = ((PairExpression)list.Cdr).AsFlatDotNetList();
+        var dotNetlist = ((PairExpression)list.Cdr).ToDotNetList();
         Expression lastEvaluatedExpression = new BooleanExpression(true);
         foreach (var expression in dotNetlist)
         {

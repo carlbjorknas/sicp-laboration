@@ -1,6 +1,6 @@
 ﻿namespace SICP.Expressions;
 
-internal class CompoundProcedure : Expression
+internal class CompoundProcedure : ProcedureExpression
 {
     private readonly List<string> _parameters;
     private readonly Expression _body;
@@ -13,7 +13,7 @@ internal class CompoundProcedure : Expression
         _environment = environment;
     }
 
-    public Expression Apply(List<Expression> arguments)
+    public override Expression Apply(List<Expression> arguments)
     {
         var extendedEnvironment = new Environment(_parameters, arguments, enclosingEnvironment: _environment);
         return new Evaluator().Eval(_body, extendedEnvironment);

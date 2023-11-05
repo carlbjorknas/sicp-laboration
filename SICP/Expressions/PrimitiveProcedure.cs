@@ -1,9 +1,7 @@
 ﻿namespace SICP.Expressions;
 
-public abstract class PrimitiveProcedure : Expression
+public abstract class PrimitiveProcedure : ProcedureExpression
 {
-    public abstract Expression Apply(List<Expression> operands);
-
     public override string ToString() => "PrimitiveProcedure";
 
     protected void EnsureOperandsHaveExpectedCount(List<Expression> operands, int expectedCount, string opName)
