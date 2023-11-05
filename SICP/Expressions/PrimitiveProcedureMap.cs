@@ -6,17 +6,24 @@ internal class PrimitiveProcedureMap : PrimitiveProcedure
 {
     public override Expression Apply(List<Expression> operands)
     {
-        EnsureOperandsHaveExpectedCount(operands, 2, "Map");
+        if (operands.Count < 2)
+            throw new ArgumentException($"'map' takes at least 2 operands.");
 
         var fn = operands[0] as ProcedureExpression
-            ?? throw new ArgumentException("The first argument to map should be a procedure.");
+            ?? throw new ArgumentException("The first argument to 'map' should be a procedure.");
 
-        var pairs = operands[1] as PairExpression
-            ?? throw new ArgumentException("The second argument to map should be a list.");
+        var theLists = EnsureOperandHaveExpectedType<PairExpression>(operands.Skip(1).ToList())
+            .Select(x => x.ToDotNetList())
+            .ToList();
 
-        return pairs
-            .ToDotNetList()
-            .Select(x => fn.Apply(new List<Expression>{ x }))
-            .ToPairs();        
+        var lengthOfShortestList = theLists.Select(x => x.Count).Min();
+        
+        return Enumerable.Range(0, lengthOfShortestList)
+            .Select(index =>
+            {
+                var elementsHavingSameIndex = theLists.Select(x => x[index]).ToList();
+                return fn.Apply(elementsHavingSameIndex);
+            })
+            .ToPairs();
     }
 }

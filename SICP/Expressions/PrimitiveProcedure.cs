@@ -14,8 +14,8 @@ public abstract class PrimitiveProcedure : ProcedureExpression
     {
         foreach (var operand in operands)
         {
-            if (operand.GetType() != typeof(T))
-                throw new Exception($"Operand '{operand}' is not a {typeof(T)}.");
+            if (!operand.GetType().IsAssignableTo(typeof(T)))
+                throw new Exception($"Operand '{operand}' is not assignable to type {typeof(T)}.");
         }
 
         return operands.Cast<T>().ToList();
