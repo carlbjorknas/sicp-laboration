@@ -39,7 +39,7 @@ public class AndTests : EndToEndTestBase
     public void And_does_not_evaluate_arguments_coming_after_a_false()
     {
         // if "a" was evaluated it would result in a UnboundVariableException.
-        SetupInputSequence($"(and false a)");
+        SetupInputSequence( "(and false a)");
         _sut!.Run();
         _printerMock!.Verify(x => x.Print("false"), Times.Once);
     }
