@@ -100,6 +100,22 @@ public class LexerTests
     }
 
     [TestMethod]
+    public void When_lexing_the_string_negative_5_a_number_token_having_the_value_negative_5_is_returned()
+    {
+        CreateSut("-5").GetNextToken()
+            .Should().BeOfType<NumberToken>()
+            .Which.Value.Should().Be(-5);
+    }
+
+    [TestMethod]
+    public void When_lexing_the_string_plus_5_a_number_token_having_the_value_5_is_returned()
+    {
+        CreateSut("+5").GetNextToken()
+            .Should().BeOfType<NumberToken>()
+            .Which.Value.Should().Be(5);
+    }
+
+    [TestMethod]
     public void Lexing_a_definition()
     {
         var sut = CreateSut("(define x 10)");
