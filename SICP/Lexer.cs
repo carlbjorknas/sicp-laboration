@@ -53,7 +53,7 @@ public class Lexer
                 tokens.Add(new BoolToken(true));
             else if (tokenText == "false")
                 tokens.Add(new BoolToken(false));
-            else if (tokenText.BeginsWithDigit())
+            else if (tokenText.BeginsWithDigit() || tokenText.IsSignedNumber())
             {
                 tokens.Add(GetNumberToken(tokenText));
             }
@@ -106,8 +106,11 @@ internal static class StringExtensions
     public static bool BeginsWithDigit(this string text)
         => Regex.IsMatch(text[..1], "[0-9]");
 
+    public static bool IsSignedNumber(this string text)
+        => text.Length > 1 && (text[0] == '-' || text[0] == '+') && text[1..].BeginsWithDigit();
+
     public static bool BeginsWithValidVariableChar(this string text)
-        => Regex.IsMatch(text[..1], "[a-z><*=]", RegexOptions.IgnoreCase);
+        => Regex.IsMatch(text[..1], "[a-z><*=/]", RegexOptions.IgnoreCase);
 
     public static string TakeUntilNextPunctuation(this string text)
     {
