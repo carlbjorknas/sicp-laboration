@@ -35,7 +35,7 @@ public class Evaluator
         {
             var evaluatedOperator = Eval(Operator(list), env);
             var evaluatedOperands = EvalOperands(Operands(list), env).ToList();
-            return Apply(evaluatedOperator, evaluatedOperands);
+            return Apply(evaluatedOperator, evaluatedOperands, env);
         }
 
         throw new Exception($"Can not evaluate the expression '{expression}'");
@@ -59,13 +59,13 @@ public class Evaluator
         }
     }
 
-    private Expression Apply(Expression op, List<Expression> arguments)
+    private Expression Apply(Expression op, List<Expression> arguments, Environment env)
     {
         return op switch
         {
-            PrimitiveProcedure primitiveProcedure => primitiveProcedure.Apply(arguments),
-            CompoundProcedure compoundProcedure => compoundProcedure.Apply(arguments),
+            PrimitiveProcedure primitiveProcedure => primitiveProcedure.Apply(arguments, env),
+            CompoundProcedure compoundProcedure => compoundProcedure.Apply(arguments, env),
             _ => throw new Exception($"'{op}' is not a procedure.")
-        };        
+        };
     }
 }

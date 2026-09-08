@@ -2,7 +2,7 @@
 
 internal class PrimitiveProcedureAppend : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands)
+    public override Expression Apply(List<Expression> operands, Environment environment)
     {
         if (!operands.Any())
             return EmptyListExpression.Instance;

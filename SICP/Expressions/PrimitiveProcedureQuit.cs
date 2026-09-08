@@ -4,7 +4,7 @@ namespace SICP.Expressions;
 
 internal class PrimitiveProcedureQuit : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands)
+    public override Expression Apply(List<Expression> operands, Environment environment)
     {
         throw new QuitException();
     }

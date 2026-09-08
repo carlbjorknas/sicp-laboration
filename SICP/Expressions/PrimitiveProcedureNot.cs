@@ -2,7 +2,7 @@
 
 internal class PrimitiveProcedureNot : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands)
+    public override Expression Apply(List<Expression> operands, Environment environment)
     {
         EnsureOperandsHaveExpectedCount(operands, 1, "not");
 

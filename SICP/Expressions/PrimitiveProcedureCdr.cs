@@ -2,7 +2,7 @@
 
 internal class PrimitiveProcedureCdr : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands)
+    public override Expression Apply(List<Expression> operands, Environment environment)
     {
         EnsureOperandsHaveExpectedCount(operands, 1, "cdr");
         EnsureOperandHaveExpectedType<PairExpression>(operands);

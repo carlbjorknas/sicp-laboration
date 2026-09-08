@@ -2,7 +2,7 @@
 {
     internal class PrimitiveProcedureCons : PrimitiveProcedure
     {
-        public override Expression Apply(List<Expression> operands)
+        public override Expression Apply(List<Expression> operands, Environment environment)
         {
             EnsureOperandsHaveExpectedCount(operands, 2, "cons");
 

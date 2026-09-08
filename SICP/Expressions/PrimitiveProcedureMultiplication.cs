@@ -2,7 +2,7 @@
 
 public class PrimitiveProcedureMultiplication : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands)
+    public override Expression Apply(List<Expression> operands, Environment environment)
     {        
         var values = EnsureOperandHaveExpectedType<NumberExpression>(operands)
             .Select(x => x.Value)
