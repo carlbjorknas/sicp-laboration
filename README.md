@@ -8,7 +8,7 @@ En interaktiv LISP-tolk (REPL) skriven i C#, inspirerad av *Structure and Interp
 dotnet run --project SICP
 ```
 
-Avsluta med `(quit)`.
+Lista de tillgängliga kommandona med `(help)`. Avsluta med `(quit)`.
 
 Resultat skrivs ut med prefixet `-->`.
 
