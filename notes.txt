@@ -1,29 +1,8 @@
-# Things to do
-- Add string manipulation functions
-- Tail recursion optimization?
-- Add support for "begin"
-- Add support for "set!"
-- Add support for "cond" (what's the difference between "cond" and "if" really? With cond it's possible to "do many if:s at once".)
-- Add support for integers with unlimited size (because Lisp doesn't have a limit?)
-- Add support for decimals.
-- Add support for macros.
+# Flyttat
 
-# Useful links
+Backlog  -> GitHub Issues:      https://github.com/carlbjorknas/sicp-laboration/issues
+Designfrågor / spikes -> GitHub Discussions
+Länkar / referenser -> docs/resources.md
+Körbara exempel -> samples/
 
-https://amirkamil.github.io/project-scheme-parser/
-https://amirkamil.github.io/project-scheme-parser/#token-representation
-
-https://conservatory.scheme.org/schemers/Documents/Standards/R5RS/HTML/r5rs-Z-H-10.html#%_sec_7.1
-
-Online interpreter
-https://inst.eecs.berkeley.edu/~cs61a/fa14/assets/interpreter/scheme.html
-
-
-# Examples
-(define (factorial n)           
-   (if (= n 1)                  
-       1                        
-       (* n (factorial (- n 1)))
-   )                            
-)                               
-(factorial 5)
+Snabb lokal kladd kan fortfarande hamna här, men flytta den vidare när den mognat.

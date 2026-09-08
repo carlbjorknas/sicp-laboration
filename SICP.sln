@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.8.12009.203 stable
@@ -24,6 +24,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "commands", "commands", "{44
 		suggest-steps.md = suggest-steps.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E12EF97A-73B6-4926-B174-D1EC528E4FB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{A608F86D-D5E0-47A3-B9D8-9B58CF0C86EC}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\docker.yml = .github\workflows\docker.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{B8192323-7698-46E1-AE73-4047997B559A}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\config.yml = .github\ISSUE_TEMPLATE\config.yml
+		.github\ISSUE_TEMPLATE\new-primitive.md = .github\ISSUE_TEMPLATE\new-primitive.md
+		.github\ISSUE_TEMPLATE\new-special-form.md = .github\ISSUE_TEMPLATE\new-special-form.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{BE9496FB-83A1-401E-8681-910F560DFF50}"
+	ProjectSection(SolutionItems) = preProject
+		samples\factorial.scm = samples\factorial.scm
+		samples\README.md = samples\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{DF8CE276-D10D-4086-A67E-C6DDE0960D4B}"
+	ProjectSection(SolutionItems) = preProject
+		docs\resources.md = docs\resources.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +69,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{44BCF627-92F9-472E-8FB5-C52F9D103CB9} = {F5F6C9CF-FE8C-4D5A-98E6-385AF01C5C57}
+		{A608F86D-D5E0-47A3-B9D8-9B58CF0C86EC} = {E12EF97A-73B6-4926-B174-D1EC528E4FB9}
+		{B8192323-7698-46E1-AE73-4047997B559A} = {E12EF97A-73B6-4926-B174-D1EC528E4FB9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B2D58CE8-C20E-4031-9CE5-ABF3C38B7F67}
