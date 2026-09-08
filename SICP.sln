@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31912.275
+# Visual Studio Version 18
+VisualStudioVersion = 18.8.12009.203 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SICP", "SICP\SICP.csproj", "{CF9273A6-C43D-4DBC-B503-85B6EB47A024}"
 EndProject
@@ -9,26 +9,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SICP_Tests", "SICP_Tests\SI
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20EAD476-B9F8-4542-B0EA-9B1933FBDBD0}"
 	ProjectSection(SolutionItems) = preProject
-		notes.txt = notes.txt
-		README.md = README.md
 		.mcp.json = .mcp.json
 		CLAUDE.md = CLAUDE.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".cursor", ".cursor", "{9FE26C2E-8C8B-407C-9592-693267A813FA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rules", "rules", "{D21135B6-6BF5-48B5-8ED0-BAB623BBBE5C}"
-	ProjectSection(SolutionItems) = preProject
-		.cursor\rules\doc-agent.mdc = .cursor\rules\doc-agent.mdc
+		notes.txt = notes.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".claude", ".claude", "{F5F6C9CF-FE8C-4D5A-98E6-385AF01C5C57}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "commands", "commands", "{44BCF627-92F9-472E-8FB5-C52F9D103CB9}"
 	ProjectSection(SolutionItems) = preProject
-		suggest-steps.md = suggest-steps.md
-		new-feature.md = new-feature.md
 		implement.md = implement.md
+		new-feature.md = new-feature.md
+		suggest-steps.md = suggest-steps.md
 	EndProjectSection
 EndProject
 Global
@@ -49,11 +42,10 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{44BCF627-92F9-472E-8FB5-C52F9D103CB9} = {F5F6C9CF-FE8C-4D5A-98E6-385AF01C5C57}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B2D58CE8-C20E-4031-9CE5-ABF3C38B7F67}
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D21135B6-6BF5-48B5-8ED0-BAB623BBBE5C} = {9FE26C2E-8C8B-407C-9592-693267A813FA}
-		{44BCF627-92F9-472E-8FB5-C52F9D103CB9} = {F5F6C9CF-FE8C-4D5A-98E6-385AF01C5C57}
 	EndGlobalSection
 EndGlobal
