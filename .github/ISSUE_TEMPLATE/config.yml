@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Designfråga / spike
+    url: https://github.com/carlbjorknas/sicp-laboration/discussions
+    about: Öppna frågor om semantik och arkitektur (t.ex. numeriskt torn, tail-call, makron) tas i Discussions först.
