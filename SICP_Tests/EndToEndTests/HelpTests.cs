@@ -22,10 +22,10 @@ public class HelpTests : EndToEndTestBase
     [TestMethod]
     public void Help_includes_names_the_user_has_defined()
     {
-        SetupInputSequence("(define x 10)", "(help)");
+        SetupInputSequence("(define my-var 10)", "(help)");
         _sut!.Run();
         _printerMock!.Verify(
-            x => x.Print(It.Is<string>(s => s.StartsWith("(") && s.Contains("x"))),
+            x => x.Print(It.Is<string>(s => s.StartsWith("(") && s.Contains("my-var"))),
             Times.Once);
     }
 

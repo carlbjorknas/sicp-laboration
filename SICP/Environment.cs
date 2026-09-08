@@ -29,7 +29,7 @@ public class Environment
         AddVariable("string?", new PrimitiveProcedureStringTest());
         AddVariable(PrimitiveProcedureStringLength.Name, new PrimitiveProcedureStringLength());
         AddVariable("map", new PrimitiveProcedureMap());
-        AddVariable("help", new PrimitiveProcedureHelp());
+        AddVariable(PrimitiveProcedureHelp.Name, new PrimitiveProcedureHelp());
         AddVariable("quit", new PrimitiveProcedureQuit());
     }
 

@@ -4,9 +4,11 @@ namespace SICP.Expressions;
 
 internal class PrimitiveProcedureHelp : PrimitiveProcedure
 {
+    public const string Name = "help";
+
     public override Expression Apply(List<Expression> operands, Environment callerEnvironment)
     {
-        EnsureOperandsHaveExpectedCount(operands, 0, "help");
+        EnsureOperandsHaveExpectedCount(operands, 0, Name);
 
         var names = callerEnvironment.GetVariableNames()
             .Concat(Evaluator.SpecialFormNames)
