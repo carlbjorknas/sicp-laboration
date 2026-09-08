@@ -21,8 +21,8 @@ Fyra roller, se `.claude/agents/` och `.claude/commands/`:
   + Scheme-semantik och postar fynden som PR-kommentarer.
 - **doc-writer** (subagent, får bara röra README.md) – håller README i synk med koden.
   Ersätter den gamla Cursor-regeln `.cursor/rules/doc-agent.mdc`.
-- Kod-rollen = kommandona `/new-feature #<nr>` (RED, tar issue-nr eller fritext) →
-  `/implement` (GREEN → draft-PR med `Closes #<nr>` → granskning på PR:en → doc →
-  "ready for review"). Granskningen sker alltid på en PR, inte på en lokal diff.
+- Kod-rollen = kommandona `/new-feature #<nr>` (RED → committa → **draft-PR** med
+  `Closes #<nr>`, så testerna syns i PR:en) → `/implement` (GREEN ovanpå samma PR →
+  granskning på PR:en → doc → "ready for review"). Granskningen sker alltid på en PR.
 - `/feature-cycle` kör hela kedjan med godkännande-gates.
 - Skill `add-primitive-procedure` = repo-mönstret för nya inbyggda procedurer.
