@@ -13,10 +13,10 @@ internal class CompoundProcedure : ProcedureExpression
         _environment = environment;
     }
 
-    public override Expression Apply(List<Expression> arguments, Environment environment)
+    public override Expression Apply(List<Expression> arguments, Environment callerEnvironment)
     {
-        // 'environment' (the call site) is ignored on purpose: the body runs in the
-        // procedure's closure environment (lexical scoping).
+        // callerEnvironment (the call site) is ignored on purpose: the body runs in
+        // the procedure's closure environment (lexical scoping).
         var extendedEnvironment = new Environment(_parameters, arguments, enclosingEnvironment: _environment);
         return new Evaluator().Eval(_body, extendedEnvironment);
     }

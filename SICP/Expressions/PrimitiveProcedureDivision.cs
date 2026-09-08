@@ -2,7 +2,7 @@ namespace SICP.Expressions;
 
 public class PrimitiveProcedureDivision : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands, Environment environment)
+    public override Expression Apply(List<Expression> operands, Environment callerEnvironment)
     {
         EnsureOperandsHaveMinimumCount(operands, 1, "/");
         var numberOperands = EnsureOperandHaveExpectedType<NumberExpression>(operands);

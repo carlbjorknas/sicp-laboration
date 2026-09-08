@@ -2,7 +2,7 @@
 
 internal class PrimitiveProcedureCar : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands, Environment environment)
+    public override Expression Apply(List<Expression> operands, Environment callerEnvironment)
     {
         EnsureOperandsHaveExpectedCount(operands, 1, "car");
         EnsureOperandHaveExpectedType<PairExpression>(operands);
