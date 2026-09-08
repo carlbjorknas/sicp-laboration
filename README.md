@@ -89,7 +89,7 @@ Alla tar exakt två heltalsargument och returnerar `true` eller `false`.
 
 | Procedur | Beskrivning |
 |----------|-------------|
-| `(eval expr)` | Utvärderar `expr` i en tom miljö (användbart tillsammans med `quote`). |
+| `(eval expr)` | Utvärderar `expr` i den aktuella miljön (användbart tillsammans med `quote`); definierade variabler och procedurer är tillgängliga. |
 | `(quit)` | Avslutar REPL:en. |
 
 ## REPL-beteende
@@ -109,7 +109,6 @@ Följande saknas eller är ofullständigt jämfört med Scheme/R5RS:
 - **Inga makron.**
 - **Ingen tail recursion-optimering** – djup rekursion kan ge stack overflow.
 - **Endast heltal** – inga decimaltal eller godtyckligt stora heltal.
-- **`eval` utan miljö** – `(eval expr)` utvärderar alltid i en ny, tom miljö; definierade variabler nås inte.
 - **Begränsad lexikal analys** – variabelnamn får inte börja med `+` eller `-` (men `-` och `+` fungerar som procedurnamn). Tokenisering av identifierare är förenklad.
 - **Förenklad sanning** – endast booleskt `false` är falskt i `if`, `and` och `or`. `0`, tom lista m.m. räknas som sanna.
 - **Aritmetik utan typkontroll** – `+` och `-` kastar undantag vid icke-numeriska argument; `*` kräver heltal.
