@@ -4,7 +4,7 @@ namespace SICP.Expressions;
 
 internal class PrimitiveProcedureMap : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands)
+    public override Expression Apply(List<Expression> operands, Environment callerEnvironment)
     {
         if (operands.Count < 2)
             throw new ArgumentException($"'map' takes at least 2 operands.");
@@ -22,7 +22,7 @@ internal class PrimitiveProcedureMap : PrimitiveProcedure
             .Select(index =>
             {
                 var elementsHavingSameIndex = theLists.Select(x => x[index]).ToList();
-                return fn.Apply(elementsHavingSameIndex);
+                return fn.Apply(elementsHavingSameIndex, callerEnvironment);
             })
             .ToPairs();
     }

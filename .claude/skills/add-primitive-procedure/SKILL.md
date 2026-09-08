@@ -16,7 +16,7 @@ namespace SICP.Expressions;
 
 public class PrimitiveProcedureModulo : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands)
+    public override Expression Apply(List<Expression> operands, Environment callerEnvironment)
     {
         EnsureOperandsHaveExpectedCount(operands, 2, "modulo");
         var numbers = EnsureOperandHaveExpectedType<NumberExpression>(operands);
@@ -27,6 +27,8 @@ public class PrimitiveProcedureModulo : PrimitiveProcedure
 ```
 
 - Ärv från `PrimitiveProcedure`.
+- `Apply` tar emot anropsmiljön (`callerEnvironment`). De flesta primitiver behöver
+  den inte – ta bara med parametern. `eval` och `help` använder den.
 - Använd hjälpmetoderna för validering: `EnsureOperandsHaveExpectedCount`,
   `EnsureOperandsHaveMinimumCount`, `EnsureOperandHaveExpectedType<T>`.
 - Vid fel argumentantal/typ: kasta – felmeddelandet skrivs ut av REPL:en.

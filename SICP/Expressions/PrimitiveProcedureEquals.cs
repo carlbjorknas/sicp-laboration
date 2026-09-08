@@ -2,7 +2,7 @@
 
 internal class PrimitiveProcedureEquals : PrimitiveProcedure
 {
-    public override Expression Apply(List<Expression> operands)
+    public override Expression Apply(List<Expression> operands, Environment callerEnvironment)
     {
         EnsureOperandsHaveExpectedCount(operands, 2, "=");
         var numbers = EnsureOperandHaveExpectedType<NumberExpression>(operands);
