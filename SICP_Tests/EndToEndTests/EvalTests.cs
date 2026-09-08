@@ -35,8 +35,14 @@ public class EvalTests : EndToEndTestBase
     {
         SetupInputSequence("(eval (quote nope))");
         _sut!.Run();
-        _printerMock!.Verify(
-            x => x.Print(It.Is<string>(s => s.Contains("nope") && s.Contains("unbound"))),
-            Times.Once);
+        _printerMock!.Verify(x => x.Print("Variable 'nope' is unbound."), Times.Once);
+    }
+
+    [TestMethod]
+    public void Eval_without_operands_throws()
+    {
+        SetupInputSequence("(eval)");
+        _sut!.Run();
+        _printerMock!.Verify(x => x.Print("'eval' expects 1 operand(s), got 0"), Times.Once);
     }
 }
