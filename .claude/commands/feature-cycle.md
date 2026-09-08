@@ -17,17 +17,22 @@ Pausa vid varje **[GATE]** och vänta på mitt uttryckliga godkännande innan du
 
 3. **GREEN**
    Implementera tills `dotnet build` och `dotnet test` är gröna. Följ skillen
-   `add-primitive-procedure` om det gäller en primitiv.
+   `add-primitive-procedure` om det gäller en primitiv. Committa.
 
-4. **Granskning**
-   Delegera till `code-reviewer`. Åtgärda blockerande punkter, kör om tills grönt.
+4. **Draft-PR**
+   Pusha branchen och skapa en draft-PR mot `main` med självgranskning.
+   Om steget kom från ett issue: `Closes #<nr>` i PR-beskrivningen.
+
+5. **Granskning**
+   Delegera till `code-reviewer` med PR-numret. Den postar fynden som
+   PR-kommentarer. Åtgärda blockerande punkter, pusha, kör om tills grönt.
    Presentera slutrapporten.
    **[GATE]** Jag godkänner att gå vidare.
 
-5. **Dokumentation**
-   Delegera till `doc-writer` för README-uppdatering.
+6. **Dokumentation**
+   Delegera till `doc-writer` för README-uppdatering. Committa och pusha.
 
-6. **PR**
-   Rapportera resultatet och skapa en PR mot `main` med självgranskning.
-   Om steget kom från ett issue: `Closes #<nr>` i PR-beskrivningen.
-   **[GATE]** Jag godkänner innan PR skapas.
+7. **Klar**
+   Rapportera resultatet och markera PR:en "ready for review" (`gh pr ready <nr>`).
+   Merga inte själv.
+   **[GATE]** Jag godkänner innan PR:en markeras redo.
