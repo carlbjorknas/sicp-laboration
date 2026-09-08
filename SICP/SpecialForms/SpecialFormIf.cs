@@ -4,7 +4,9 @@ namespace SICP.SpecialForms;
 
 static internal class SpecialFormIf
 {
-    static public bool Recognises(Expression expression) => expression.IsTaggedList("if");
+    public const string Tag = "if";
+
+    static public bool Recognises(Expression expression) => expression.IsTaggedList(Tag);
     static Expression IfPredicate(PairExpression list) => list.Cadr;
     static Expression IfConsequent(PairExpression list) => list.Caddr;
     static Expression IfAlternative(PairExpression list)

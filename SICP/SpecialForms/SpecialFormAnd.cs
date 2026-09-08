@@ -4,7 +4,9 @@ namespace SICP.SpecialForms;
 
 internal static class SpecialFormAnd
 {
-    public static bool Recognises(Expression expression) => expression.IsTaggedList("and");
+    public const string Tag = "and";
+
+    public static bool Recognises(Expression expression) => expression.IsTaggedList(Tag);
     public static Expression Evaluate(Expression andExpression, Evaluator evaluator, Environment env)
     {
         var list = (PairExpression)andExpression;

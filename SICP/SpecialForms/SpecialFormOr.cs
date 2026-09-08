@@ -4,7 +4,9 @@ namespace SICP.SpecialForms;
 
 internal static class SpecialFormOr
 {
-    public static bool Recognises(Expression expression) => expression.IsTaggedList("or");
+    public const string Tag = "or";
+
+    public static bool Recognises(Expression expression) => expression.IsTaggedList(Tag);
     public static Expression Evaluate(Expression orExpression, Evaluator evaluator, Environment env)
     {
         var list = (PairExpression)orExpression;

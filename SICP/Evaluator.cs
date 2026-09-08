@@ -5,6 +5,18 @@ namespace SICP;
 
 public class Evaluator
 {
+    // The special forms Eval recognises below. Kept next to the dispatch so the
+    // two stay in sync; '(help)' uses this to list them.
+    public static readonly IReadOnlyList<string> SpecialFormNames =
+    [
+        SpecialFormQuote.Tag,
+        SpecialFormAssignment.Tag,
+        SpecialFormIf.Tag,
+        SpecialFormAnd.Tag,
+        SpecialFormOr.Tag,
+        SpecialFormLambda.Tag,
+    ];
+
     public Expression Eval(Expression expression, Environment env)
     {
         if (IsSelfEvaluating(expression))

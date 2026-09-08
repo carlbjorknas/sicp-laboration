@@ -4,7 +4,9 @@ namespace SICP.SpecialForms;
 
 internal static class SpecialFormLambda
 {
-    internal static bool Recognises(Expression expression) => expression.IsTaggedList("lambda");
+    public const string Tag = "lambda";
+
+    internal static bool Recognises(Expression expression) => expression.IsTaggedList(Tag);
 
     static List<string> Parameters(PairExpression list)
         => ((PairExpression)list.Cadr).ToDotNetList().Cast<VariableExpression>().Select(x => x.Value).ToList();
