@@ -14,4 +14,5 @@ Testet är godkänt (RED-fasen är klar). Gör nu följande i ordning:
 4. **Rapportera** resultatet (build, test, granskning, doc-ändringar).
 
 5. **Skapa en PR** mot `main` med en självgranskning i beskrivningen. Följ
-   branch-konventionen `feature/<kort-beskrivning>`.
+   branch-konventionen `feature/<kort-beskrivning>`. Om steget kom från ett issue:
+   skriv `Closes #<nr>` i PR-beskrivningen så att issuet stängs vid merge.
