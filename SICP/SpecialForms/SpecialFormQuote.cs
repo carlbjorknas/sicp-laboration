@@ -4,7 +4,9 @@ namespace SICP.SpecialForms;
 
 internal static class SpecialFormQuote
 {
-    public static bool Recognises(Expression expression) => expression.IsTaggedList("quote");
+    public const string Tag = "quote";
+
+    public static bool Recognises(Expression expression) => expression.IsTaggedList(Tag);
 
     public static Expression Evaluate(Expression expression)
     {

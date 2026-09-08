@@ -2,6 +2,7 @@
 using SICP;
 
 Console.WriteLine("Start coding!");
+Console.WriteLine("List the available commands with '(help)'.");
 Console.WriteLine("Quit by entering the command '(quit)'.");
 
 var reader = new Reader();

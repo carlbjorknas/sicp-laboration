@@ -29,6 +29,7 @@ public class Environment
         AddVariable("string?", new PrimitiveProcedureStringTest());
         AddVariable(PrimitiveProcedureStringLength.Name, new PrimitiveProcedureStringLength());
         AddVariable("map", new PrimitiveProcedureMap());
+        AddVariable(PrimitiveProcedureHelp.Name, new PrimitiveProcedureHelp());
         AddVariable("quit", new PrimitiveProcedureQuit());
     }
 
@@ -57,8 +58,17 @@ public class Environment
         if (_varToValueMap.TryGetValue(name, out var value))
             return value;
 
-        return _enclosingEnvironment != null 
+        return _enclosingEnvironment != null
             ? _enclosingEnvironment.GetValue(name)
             : throw new UnboundVariableException(name);
+    }
+
+    // All names bound in this environment and every enclosing one.
+    public IEnumerable<string> GetVariableNames()
+    {
+        var names = _varToValueMap.Keys.AsEnumerable();
+        return _enclosingEnvironment != null
+            ? names.Concat(_enclosingEnvironment.GetVariableNames())
+            : names;
     }
 }

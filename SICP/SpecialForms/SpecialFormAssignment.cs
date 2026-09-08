@@ -4,7 +4,9 @@ namespace SICP.SpecialForms;
 
 internal static class SpecialFormAssignment
 {
-    public static bool Recognises(Expression expr) => expr.IsTaggedList("define");
+    public const string Tag = "define";
+
+    public static bool Recognises(Expression expr) => expr.IsTaggedList(Tag);
      
     // The standard procedure definition follows the format below,
     // i e the second object is a list instead of a symbol.

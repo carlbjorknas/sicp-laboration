@@ -8,7 +8,7 @@ En interaktiv LISP-tolk (REPL) skriven i C#, inspirerad av *Structure and Interp
 dotnet run --project SICP
 ```
 
-Avsluta med `(quit)`.
+Lista de tillgängliga kommandona med `(help)`. Avsluta med `(quit)`.
 
 Resultat skrivs ut med prefixet `-->`.
 
@@ -90,6 +90,7 @@ Alla tar exakt två heltalsargument och returnerar `true` eller `false`.
 | Procedur | Beskrivning |
 |----------|-------------|
 | `(eval expr)` | Utvärderar `expr` i den aktuella miljön (användbart tillsammans med `quote`); definierade variabler och procedurer är tillgängliga. |
+| `(help)` | Returnerar en sorterad lista med namn på alla tillgängliga primitiva procedurer och specialformer, samt användardefinierade variabelnamn. Tar inga argument. |
 | `(quit)` | Avslutar REPL:en. |
 
 ## REPL-beteende
