@@ -17,10 +17,12 @@
 ## Agentupplägg
 Fyra roller, se `.claude/agents/` och `.claude/commands/`:
 - **feature-scout** (subagent) – går igenom öppna issues + koden och föreslår nästa steg. Trigga via `/suggest-steps`.
-- **code-reviewer** (subagent, read-only) – granskar diff mot kvalitetskrav + Scheme-semantik.
+- **code-reviewer** (subagent, ändrar aldrig kod) – granskar PR:en mot kvalitetskrav
+  + Scheme-semantik och postar fynden som PR-kommentarer.
 - **doc-writer** (subagent, får bara röra README.md) – håller README i synk med koden.
   Ersätter den gamla Cursor-regeln `.cursor/rules/doc-agent.mdc`.
 - Kod-rollen = kommandona `/new-feature #<nr>` (RED, tar issue-nr eller fritext) →
-  `/implement` (GREEN + granskning + doc + PR med `Closes #<nr>`).
+  `/implement` (GREEN → draft-PR med `Closes #<nr>` → granskning på PR:en → doc →
+  "ready for review"). Granskningen sker alltid på en PR, inte på en lokal diff.
 - `/feature-cycle` kör hela kedjan med godkännande-gates.
 - Skill `add-primitive-procedure` = repo-mönstret för nya inbyggda procedurer.
